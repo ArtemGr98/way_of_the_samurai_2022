@@ -1,0 +1,10 @@
+.App {
+    //text-align: center;
+    &-container {
+        padding: 2%;
+        display: flex;
+    }
+    .content {
+        width: 80%;
+    }
+}
