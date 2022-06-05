@@ -1,0 +1,28 @@
+.profile {
+    &_img {
+        width: 100%;
+        height: 300px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &_info {
+        margin-top: 20px;
+        display: flex;
+        max-height: 300px;
+        &_ava {
+            width: 20%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        &_description {
+            width: 80%;
+            padding-left: 20px;
+        }
+    }
+}
