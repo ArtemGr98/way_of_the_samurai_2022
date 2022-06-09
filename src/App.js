@@ -3,13 +3,13 @@ import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 import Profile from "./components/Profile/Profile";
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
+        <div className="app">
             <Header />
-            <div className="App-container">
+            <div className="app__main">
                 <Nav />
-                <div className="content">
+                <div className="app__content">
                     <Profile />
                 </div>
             </div>

@@ -1,10 +1,11 @@
-.App {
-    //text-align: center;
-    &-container {
+.app {
+    &__main {
         padding: 2%;
         display: flex;
     }
-    .content {
+    &__content {
         width: 80%;
     }
 }
+
+

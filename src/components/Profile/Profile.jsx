@@ -1,26 +1,27 @@
-import background from './img/background.jpg'
-import profileImg from './img/profileImg.png'
-import './Profile.scss'
+import background from '../../img/Profile/background.jpg'
+import profileImg from '../../img/Profile/profileImg.png'
+import styles from './Profile.module.scss'
+import Posts from "./Posts/Posts";
 
 const Profile = () => {
     return (
-        <div className="profile">
-            <div className="profile_img">
+        <div className={styles.profile}>
+            <div className={styles.profile__img}>
                 <img src={background} alt="background"/>
             </div>
-            <div className="profile_info">
-                <div className="profile_info_ava">
+
+            <div className={styles.profile__info}>
+                <div className={styles.profile__ava}>
                     <img src={profileImg} alt="profileImg"/>
                 </div>
-                <div className="profile_info_description">
-                    <div className="profile_info_description__name">
-                        Artem
+                <div className={styles.profile__description}>
+                    <div>
+                        Artem5
                     </div>
                 </div>
             </div>
-            <div>
-                posts
-            </div>
+
+            <Posts />
         </div>
     )
 }
