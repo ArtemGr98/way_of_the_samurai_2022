@@ -1,24 +1,24 @@
-import styles from './Nav.module.scss'
+import {NavStyled} from "./NavStyled";
 
 const Nav = () => {
     return (
-        <nav className={styles.nav}>
-            <a href="#" className={styles.nav__item}>
+        <NavStyled>
+            <a href="#">
                 Profile
             </a>
-            <a href="#" className={styles.nav__item}>
+            <a href="#">
                 Massages
             </a>
-            <a href="#" className={styles.nav__item}>
+            <a href="#">
                 News
             </a>
-            <a href="#" className={styles.nav__item}>
+            <a href="#">
                 Music
             </a>
-            <a href="#" className={styles.nav__item}>
+            <a href="#">
                 Settings
             </a>
-        </nav>
+        </NavStyled>
     )
 }
 

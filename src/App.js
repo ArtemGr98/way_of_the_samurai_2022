@@ -1,18 +1,18 @@
-import './App.scss';
 import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 import Profile from "./components/Profile/Profile";
+import {AppMain} from "./AppStyle";
 
 const App = () => {
     return (
         <div className="app">
             <Header />
-            <div className="app__main">
+            <AppMain>
                 <Nav />
-                <div className="app__content">
+                <div className="content">
                     <Profile />
                 </div>
-            </div>
+            </AppMain>
         </div>
     );
 }

@@ -1,13 +1,13 @@
 import logo from '../../img/logo.svg'
-import styles from './Header.module.scss'
+import {HeaderStyle, Logo} from "./HeaderdStyled";
 
 const Header = () => {
     return (
-        <header className={styles.header}>
-            <div className={styles.logo}>
+        <HeaderStyle>
+            <Logo>
                 <img src={logo} alt="logo"/>
-            </div>
-        </header>
+            </Logo>
+        </HeaderStyle>
     )
 }
 

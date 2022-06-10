@@ -1,18 +1,19 @@
-import styles from './Posts.module.scss'
-import Post from "./Post/Post";
+import Post from "../Post/Post";
 import Button from "../../../interface/Button/Button";
+import {InputWrapper, PostsTitle} from "./PostsStyled";
 
 const Posts = () => {
     return (
-        <div className={styles.posts}>
-            <div className={styles.textarea_wrapper}>
+        <div>
+            <InputWrapper>
                 <textarea />
                 <Button name="add post" />
-            </div>
-            <div className={styles.posts__wrapper}>
-                <div className={styles.posts__title}>
+            </InputWrapper>
+            <div>
+                <PostsTitle>
                     My posts
-                </div>
+                </PostsTitle>
+                <Post text="post text" like="4" dislike="1" />
                 <Post text="post text" like="4" dislike="1" />
             </div>
         </div>
