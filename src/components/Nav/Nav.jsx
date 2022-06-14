@@ -1,24 +1,41 @@
-import {NavStyled} from "./NavStyled";
+import {NavLink} from "react-router-dom";
+import styled from "styled-components";
+
+const NavWrapper = styled.nav`
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+`
+const NavbarLink = styled(NavLink)`
+    font-size: 20px;
+    color: deepskyblue;
+    text-decoration: none;
+    text-align: start;
+    margin-bottom: 10px;
+    &.active {
+      color: gold;
+    }
+`
 
 const Nav = () => {
     return (
-        <NavStyled>
-            <a href="#">
+        <NavWrapper>
+            <NavbarLink to="/profile">
                 Profile
-            </a>
-            <a href="#">
+            </NavbarLink>
+            <NavbarLink to="/messages">
                 Massages
-            </a>
-            <a href="#">
+            </NavbarLink>
+            <NavbarLink to="/news">
                 News
-            </a>
-            <a href="#">
+            </NavbarLink>
+            <NavbarLink to="/music">
                 Music
-            </a>
-            <a href="#">
+            </NavbarLink>
+            <NavbarLink to="/settings">
                 Settings
-            </a>
-        </NavStyled>
+            </NavbarLink>
+        </NavWrapper>
     )
 }
 

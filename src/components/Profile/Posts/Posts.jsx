@@ -1,20 +1,37 @@
-import Post from "../Post/Post";
-import Button from "../../../interface/Button/Button";
-import {InputWrapper, PostsTitle} from "./PostsStyled";
+import Post from "./Post/Post";
+import styled from "styled-components";
+import {InputWrapper, PostsButton, Textarea} from "../../../interface/InputWrapper/InputWrapper";
+import React from "react";
 
-const Posts = () => {
+const PostsTitle = styled.div`
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 40px 0;
+`
+
+const Posts = (props) => {
+
+    const input = React.createRef()
+
+    const updatePost = () => {
+        const text = input.current.value
+        props.updatePost(text)
+    }
+
     return (
         <div>
             <InputWrapper>
-                <textarea />
-                <Button name="add post" />
+                <Textarea ref={input} onChange={updatePost} value={props.state.textareaState}/>
+                <PostsButton onClick={props.addPost}>
+                    add post
+                </PostsButton>
             </InputWrapper>
             <div>
                 <PostsTitle>
                     My posts
                 </PostsTitle>
-                <Post text="post text" like="4" dislike="1" />
-                <Post text="post text" like="4" dislike="1" />
+                {props.state.postData.map(data => <Post text={data.text} like={data.like} dislike={data.dislike} id={data.id} />)}
             </div>
         </div>
     )
