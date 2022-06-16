@@ -4,6 +4,7 @@ import Chat from "./Chat/Chat";
 import {InputWrapper, PostsButton, Textarea} from "../../interface/InputWrapper/InputWrapper";
 import {Route, Routes} from "react-router-dom";
 import React from 'react';
+import {addMessageCreator, updateMessageCreator} from "../../actions/actionCreator";
 
 const MessagesWrapper = styled.div`
   display: flex;
@@ -22,9 +23,15 @@ const ChatWrapper = styled.div`
 const Messages = (props) => {
     const input = React.createRef()
 
+    const addMessage = () => {
+        const action = addMessageCreator()
+        props.dispatch(action)
+    }
+
     const updateMessage = () => {
         const text = input.current.value
-        props.dispatch({type: "UPDATE-MESSAGE", messageText: text})
+        const action = updateMessageCreator(text);
+        props.dispatch(action)
     }
 
     return (
@@ -54,7 +61,7 @@ const Messages = (props) => {
 
                 <InputWrapper>
                     <Textarea ref={input} onChange={updateMessage} value={props.state.textareaState}/>
-                    <PostsButton onClick={() => props.dispatch({type: "ADD-MESSAGE"})}>
+                    <PostsButton onClick={addMessage}>
                         send
                     </PostsButton>
                 </InputWrapper>

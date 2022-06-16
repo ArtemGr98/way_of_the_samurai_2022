@@ -2,6 +2,7 @@ import Post from "./Post/Post";
 import styled from "styled-components";
 import {InputWrapper, PostsButton, Textarea} from "../../../interface/InputWrapper/InputWrapper";
 import React from "react";
+import {addPostCreator, updatePostCreator} from "../../../actions/actionCreator";
 
 const PostsTitle = styled.div`
   text-align: center;
@@ -13,16 +14,22 @@ const PostsTitle = styled.div`
 const Posts = (props) => {
     const input = React.createRef()
 
+    const addPost = () => {
+        const action = addPostCreator()
+        props.dispatch(action)
+    }
+
     const updatePost = () => {
         const text = input.current.value
-        props.dispatch({type: "UPDATE-POST", postText: text})
+        const action = updatePostCreator(text)
+        props.dispatch(action)
     }
 
     return (
         <div>
             <InputWrapper>
                 <Textarea ref={input} onChange={updatePost} value={props.state.textareaState}/>
-                <PostsButton onClick={() => props.dispatch({type: "ADD-POST"})}>
+                <PostsButton onClick={addPost}>
                     add post
                 </PostsButton>
             </InputWrapper>

@@ -1,3 +1,5 @@
+import {ACTIVE_CHAT_ID, ADD_MESSAGE, ADD_POST, UPDATE_MESSAGE, UPDATE_POST} from "../actions/actionType";
+
 export const store = {
     _subscriber: () => {
         console.log("no subscribers")
@@ -66,7 +68,11 @@ export const store = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        if (action.type === UPDATE_POST) {
+            this._state.profile.textareaState = action.postText
+            this._subscriber(this)
+        }
+        else if (action.type === ADD_POST) {
             const state = this.getState()
             const statePost = state.profile.postData
 
@@ -80,11 +86,12 @@ export const store = {
             state.profile.textareaState = ''
             this._subscriber(this)
         }
-        else if (action.type === "UPDATE-POST") {
-            this._state.profile.textareaState = action.postText
+        else if (action.type === UPDATE_MESSAGE) {
+            const state = this.getState()
+            state.messages.textareaState = action.messageText
             this._subscriber(this)
         }
-        else if (action.type === "ADD-MESSAGE") {
+        else if (action.type === ADD_MESSAGE) {
             const state = this.getState()
             const chatArr = state.messages.chatData
             const id = state.messages.activeChat
@@ -99,15 +106,9 @@ export const store = {
             state.messages.textareaState = ''
             this._subscriber(this)
         }
-        else if (action.type === "UPDATE-MESSAGE") {
-            const state = this.getState()
-            state.messages.textareaState = action.messageText
-            this._subscriber(this)
-        }
-        else if (action.type === "ACTIVE-CHAT-ID") {
+        else if (action.type === ACTIVE_CHAT_ID) {
             this.getState().messages.activeChat = action.id
         }
-
     },
 }
 
