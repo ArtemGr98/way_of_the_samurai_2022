@@ -4,7 +4,7 @@ import Chat from "./Chat/Chat";
 import {InputWrapper, PostsButton, Textarea} from "../../interface/InputWrapper/InputWrapper";
 import {Route, Routes} from "react-router-dom";
 import React from 'react';
-import {addMessageCreator, updateMessageCreator} from "../../actions/actionCreator";
+import {addMessageCreator, updateMessageCreator} from "../../redux/actions/actionsCreators";
 
 const MessagesWrapper = styled.div`
   display: flex;
@@ -21,15 +21,15 @@ const ChatWrapper = styled.div`
 `
 
 const Messages = (props) => {
-    const input = React.createRef()
+    // const input = React.createRef()
 
     const addMessage = () => {
         const action = addMessageCreator()
         props.dispatch(action)
     }
 
-    const updateMessage = () => {
-        const text = input.current.value
+    const updateMessage = (e) => {
+        const text = e.target.value
         const action = updateMessageCreator(text);
         props.dispatch(action)
     }
@@ -60,7 +60,7 @@ const Messages = (props) => {
                 </Routes>
 
                 <InputWrapper>
-                    <Textarea ref={input} onChange={updateMessage} value={props.state.textareaState}/>
+                    <Textarea onChange={updateMessage} value={props.state.textareaState}/>
                     <PostsButton onClick={addMessage}>
                         send
                     </PostsButton>

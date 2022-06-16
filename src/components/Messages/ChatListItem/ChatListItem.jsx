@@ -1,6 +1,6 @@
 import {NavLink} from "react-router-dom";
 import styled from "styled-components";
-import {activeChatIdCreator} from "../../../actions/actionCreator";
+import {activeChatIdCreator} from "../../../redux/actions/actionsCreators";
 
 const ChatListLink = styled(NavLink)`
   padding: 10px;

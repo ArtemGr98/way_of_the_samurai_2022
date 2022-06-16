@@ -2,7 +2,7 @@ import Post from "./Post/Post";
 import styled from "styled-components";
 import {InputWrapper, PostsButton, Textarea} from "../../../interface/InputWrapper/InputWrapper";
 import React from "react";
-import {addPostCreator, updatePostCreator} from "../../../actions/actionCreator";
+import {addPostCreator, updatePostCreator} from "../../../redux/actions/actionsCreators";
 
 const PostsTitle = styled.div`
   text-align: center;
@@ -12,15 +12,15 @@ const PostsTitle = styled.div`
 `
 
 const Posts = (props) => {
-    const input = React.createRef()
+    // const input = React.createRef()
 
     const addPost = () => {
         const action = addPostCreator()
         props.dispatch(action)
     }
 
-    const updatePost = () => {
-        const text = input.current.value
+    const updatePost = (e) => {
+        const text = e.target.value
         const action = updatePostCreator(text)
         props.dispatch(action)
     }
@@ -28,7 +28,7 @@ const Posts = (props) => {
     return (
         <div>
             <InputWrapper>
-                <Textarea ref={input} onChange={updatePost} value={props.state.textareaState}/>
+                <Textarea onChange={updatePost} value={props.state.textareaState}/>
                 <PostsButton onClick={addPost}>
                     add post
                 </PostsButton>

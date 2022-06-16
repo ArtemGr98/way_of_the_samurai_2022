@@ -1,4 +1,5 @@
-import {ACTIVE_CHAT_ID, ADD_MESSAGE, ADD_POST, UPDATE_MESSAGE, UPDATE_POST} from "../actions/actionType";
+import profileReducer from "./reducers/profileReducer";
+import messageReducer from "./reducers/messageReducer";
 
 export const store = {
     _subscriber: () => {
@@ -68,47 +69,12 @@ export const store = {
     },
 
     dispatch(action) {
-        if (action.type === UPDATE_POST) {
-            this._state.profile.textareaState = action.postText
-            this._subscriber(this)
-        }
-        else if (action.type === ADD_POST) {
-            const state = this.getState()
-            const statePost = state.profile.postData
+        const state = this.getState()
 
-            const post = {
-                text: state.profile.textareaState,
-                like: 0,
-                dislike: 0,
-                id: statePost.length + 1
-            }
-            statePost.push(post)
-            state.profile.textareaState = ''
-            this._subscriber(this)
-        }
-        else if (action.type === UPDATE_MESSAGE) {
-            const state = this.getState()
-            state.messages.textareaState = action.messageText
-            this._subscriber(this)
-        }
-        else if (action.type === ADD_MESSAGE) {
-            const state = this.getState()
-            const chatArr = state.messages.chatData
-            const id = state.messages.activeChat
-            const currentChat = chatArr.filter((chat) => chat.chatId === id)
-            console.log(currentChat)
-            const chatMessage = {
-                text: state.messages.textareaState,
-                id: 1,
-                position: "end"
-            }
-            currentChat[0].chatText.push(chatMessage)
-            state.messages.textareaState = ''
-            this._subscriber(this)
-        }
-        else if (action.type === ACTIVE_CHAT_ID) {
-            this.getState().messages.activeChat = action.id
-        }
+        profileReducer(state.profile, action)
+        messageReducer(state.messages, action)
+
+        this._subscriber(this)
     },
 }
 

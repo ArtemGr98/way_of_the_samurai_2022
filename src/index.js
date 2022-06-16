@@ -4,11 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import {store} from "./redux/store";
+import store from "./redux/reduxStore";
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const renderApp = (store) => {
+    console.log("render!!!")
     root.render(
         <React.StrictMode>
             <BrowserRouter>
@@ -20,7 +21,7 @@ const renderApp = (store) => {
 
 renderApp(store)
 
-store.subscribe(renderApp)
+store.subscribe(() => renderApp(store))
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
