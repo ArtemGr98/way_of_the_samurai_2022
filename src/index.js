@@ -4,27 +4,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import {state, addMessage, addPost, updateMessage, updatePost, subscribe} from "./redux/state";
+import {store} from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
-export const renderApp = (state) => {
+const renderApp = (store) => {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state={state}
-                     addPost={addPost}
-                     updatePost={updatePost}
-                     addMessage={addMessage}
-                     updateMessage={updateMessage} />
+                <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
             </BrowserRouter>
         </React.StrictMode>
     );
 }
 
-renderApp(state)
+renderApp(store)
 
-subscribe(renderApp)
+store.subscribe(renderApp)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

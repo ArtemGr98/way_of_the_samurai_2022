@@ -11,19 +11,18 @@ const PostsTitle = styled.div`
 `
 
 const Posts = (props) => {
-
     const input = React.createRef()
 
     const updatePost = () => {
         const text = input.current.value
-        props.updatePost(text)
+        props.dispatch({type: "UPDATE-POST", postText: text})
     }
 
     return (
         <div>
             <InputWrapper>
                 <Textarea ref={input} onChange={updatePost} value={props.state.textareaState}/>
-                <PostsButton onClick={props.addPost}>
+                <PostsButton onClick={() => props.dispatch({type: "ADD-POST"})}>
                     add post
                 </PostsButton>
             </InputWrapper>
@@ -31,7 +30,7 @@ const Posts = (props) => {
                 <PostsTitle>
                     My posts
                 </PostsTitle>
-                {props.state.postData.map(data => <Post text={data.text} like={data.like} dislike={data.dislike} id={data.id} />)}
+                {props.state.postData.map( data => <Post text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
             </div>
         </div>
     )

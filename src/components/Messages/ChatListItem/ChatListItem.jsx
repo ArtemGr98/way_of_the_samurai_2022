@@ -16,8 +16,9 @@ const ChatListLink = styled(NavLink)`
 
 const ChatListItem = (props) => {
     const path = "/messages/" + props.id
+
     return (
-        <ChatListLink to={path}>
+        <ChatListLink to={path} id={props.id} onClick={ () => props.dispatch({type: "ACTIVE-CHAT-ID", id: props.id})}>
             {props.name}
         </ChatListLink>
     )
