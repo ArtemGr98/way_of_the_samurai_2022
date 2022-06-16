@@ -1,6 +1,5 @@
 import {NavLink} from "react-router-dom";
 import styled from "styled-components";
-import {activeChatIdCreator} from "../../../redux/actions/actionsCreators";
 
 const ChatListLink = styled(NavLink)`
   padding: 10px;
@@ -18,14 +17,12 @@ const ChatListLink = styled(NavLink)`
 const ChatListItem = (props) => {
     const path = "/messages/" + props.id
 
-    const activeChatId = (id) => {
-        const action = activeChatIdCreator(id)
-        props.dispatch(action)
+    const onActiveChatId = (id) => {
+        props.activeChatId(id)
     }
 
-
     return (
-        <ChatListLink to={path} id={props.id} onClick={() => activeChatId(props.id)}>
+        <ChatListLink to={path} id={props.id} onClick={() => onActiveChatId(props.id)}>
             {props.name}
         </ChatListLink>
     )

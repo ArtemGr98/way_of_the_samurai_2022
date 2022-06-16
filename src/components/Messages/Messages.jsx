@@ -3,8 +3,6 @@ import ChatListItem from "./ChatListItem/ChatListItem";
 import Chat from "./Chat/Chat";
 import {InputWrapper, PostsButton, Textarea} from "../../interface/InputWrapper/InputWrapper";
 import {Route, Routes} from "react-router-dom";
-import React from 'react';
-import {addMessageCreator, updateMessageCreator} from "../../redux/actions/actionsCreators";
 
 const MessagesWrapper = styled.div`
   display: flex;
@@ -21,24 +19,21 @@ const ChatWrapper = styled.div`
 `
 
 const Messages = (props) => {
-    // const input = React.createRef()
 
-    const addMessage = () => {
-        const action = addMessageCreator()
-        props.dispatch(action)
+    const onAddMessage = () => {
+        props.addMessage()
     }
 
-    const updateMessage = (e) => {
+    const onUpdateMessage = (e) => {
         const text = e.target.value
-        const action = updateMessageCreator(text);
-        props.dispatch(action)
+        props.updateMessage(text)
     }
 
     return (
         <MessagesWrapper>
             <ChatList>
                 {props.state.chatListData.map(data => <ChatListItem
-                    name={data.name} id={data.id} key={data.id} dispatch={props.dispatch} />)}
+                    name={data.name} id={data.id} key={data.id} activeChatId={props.activeChatId} />)}
             </ChatList>
             <ChatWrapper>
                 <Routes>
@@ -60,8 +55,8 @@ const Messages = (props) => {
                 </Routes>
 
                 <InputWrapper>
-                    <Textarea onChange={updateMessage} value={props.state.textareaState}/>
-                    <PostsButton onClick={addMessage}>
+                    <Textarea onChange={onUpdateMessage} value={props.state.textareaState}/>
+                    <PostsButton onClick={onAddMessage}>
                         send
                     </PostsButton>
                 </InputWrapper>
