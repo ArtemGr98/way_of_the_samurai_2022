@@ -25,24 +25,27 @@ const initState =  {
 }
 
 const profileReducer = (state = initState, action) => {
-
     switch (action.type) {
-        case UPDATE_POST:
-            state.textareaState = action.postText
-            return state
+        case UPDATE_POST: {
+            return  {
+                ...state,
+                textareaState: action.postText
+            }
+        }
 
-        case ADD_POST:
-            const statePost = state.postData
-
+        case ADD_POST: {
             const post = {
                 text: state.textareaState,
                 like: 0,
                 dislike: 0,
-                id: statePost.length + 1
+                id: state.postData.length + 1
             }
-            statePost.push(post)
-            state.textareaState = ''
-            return state
+            return  {
+                ...state,
+                textareaState: '',
+                postData: [...state.postData, post]
+            }
+        }
 
         default:
            return state

@@ -16,7 +16,7 @@ const AppContent = styled.div`
   width: 80%;
 `
 
-const App = (props) => {
+const App = () => {
     return (
         <div className="app">
             <Header/>
@@ -25,9 +25,9 @@ const App = (props) => {
                 <AppContent>
                     <Routes>
                         <Route path="/profile"
-                               element={<Profile store={props.store} />} />
+                               element={<Profile />} />
                         <Route path="/messages/*"
-                               element={<MessagesContainer store={props.store} />}/>
+                               element={<MessagesContainer />}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>

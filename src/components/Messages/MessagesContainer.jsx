@@ -1,29 +1,29 @@
 import {activeChatIdCreator, addMessageCreator, updateMessageCreator} from "../../redux/actions/actionsCreators";
 import Messages from "./Messages";
+import {connect} from "react-redux";
 
-const MessagesContainer = (props) => {
-
-    const store = props.store
-
-    const addMessage = () => {
-        const action = addMessageCreator()
-        store.dispatch(action)
+const mapStateToProps = (state) => {
+    return {
+        chatListData: state.messages.chatListData,
+        chatData: state.messages.chatData,
+        textareaState: state.messages.textareaState,
     }
-
-    const updateMessage = (text) => {
-        const action = updateMessageCreator(text);
-        store.dispatch(action)
-    }
-
-    const activeChatId = (id) => {
-        const action = activeChatIdCreator(id)
-        store.dispatch(action)
-    }
-
-    return <Messages state={store.getState().messages}
-                     addMessage={addMessage}
-                     updateMessage={updateMessage}
-                     activeChatId={activeChatId} />
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addMessage: () => {
+            dispatch(addMessageCreator())
+        },
+        updateMessage: (text) => {
+            dispatch(updateMessageCreator(text))
+        },
+        activeChatId: (id) => {
+            dispatch(activeChatIdCreator(id))
+        }
+    }
+}
+
+const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(Messages)
 
 export default MessagesContainer

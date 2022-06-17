@@ -32,12 +32,12 @@ const Messages = (props) => {
     return (
         <MessagesWrapper>
             <ChatList>
-                {props.state.chatListData.map(data => <ChatListItem
+                {props.chatListData.map(data => <ChatListItem
                     name={data.name} id={data.id} key={data.id} activeChatId={props.activeChatId} />)}
             </ChatList>
             <ChatWrapper>
                 <Routes>
-                    {props.state.chatData.map(data => {
+                    {props.chatData.map(data => {
                         return (
                             <Route path={`/${data.chatId}`}
                                    key={data.chatId}
@@ -55,7 +55,7 @@ const Messages = (props) => {
                 </Routes>
 
                 <InputWrapper>
-                    <Textarea onChange={onUpdateMessage} value={props.state.textareaState}/>
+                    <Textarea onChange={onUpdateMessage} value={props.textareaState}/>
                     <PostsButton onClick={onAddMessage}>
                         send
                     </PostsButton>

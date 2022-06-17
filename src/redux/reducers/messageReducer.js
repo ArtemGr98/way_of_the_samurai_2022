@@ -32,29 +32,44 @@ const initState = {
 }
 
 const messageReducer = (state = initState, action) => {
-
     switch (action.type) {
-        case UPDATE_MESSAGE:
-            state.textareaState = action.messageText
-            return state
+        case UPDATE_MESSAGE: {
+            return  {
+                ...state,
+                textareaState: action.messageText
+            }
+        }
 
-        case ADD_MESSAGE:
+        case ADD_MESSAGE: {
             const chatArr = state.chatData
             const id = state.activeChat
-            const currentChat = chatArr.filter((chat) => chat.chatId === id)
-            console.log(currentChat)
+
+            const currentChat = chatArr.find((chat) => chat.chatId === id)
+
             const chatMessage = {
                 text: state.textareaState,
-                id: 1,
+                id: currentChat.chatText.length + 1,
                 position: "end"
             }
-            currentChat[0].chatText.push(chatMessage)
-            state.textareaState = ''
-            return state
+            return {
+                ...state,
+                textareaState: '',
+                chatData: [...state.chatData.map(chat => {
+                    if (chat.chatId === id) {
+                        chat.chatText.push(chatMessage)
+                        console.log('push', chat)
+                    }
+                    return chat
+                })]
+            }
+        }
 
-        case ACTIVE_CHAT_ID:
-            state.activeChat = action.id
-            return state
+        case ACTIVE_CHAT_ID: {
+            return  {
+                ...state,
+                activeChat: action.id
+            }
+        }
 
         default:
             return state

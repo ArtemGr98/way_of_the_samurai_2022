@@ -23,7 +23,7 @@ const Posts = (props) => {
     return (
         <div>
             <InputWrapper>
-                <Textarea onChange={onUpdatePost} value={props.state.textareaState}/>
+                <Textarea onChange={onUpdatePost} value={props.textareaState}/>
                 <PostsButton onClick={onAddPost}>
                     add post
                 </PostsButton>
@@ -32,7 +32,7 @@ const Posts = (props) => {
                 <PostsTitle>
                     My posts
                 </PostsTitle>
-                {props.state.postData.map( data => <Post text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
+                {props.postData.map( data => <Post text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
             </div>
         </div>
     )
