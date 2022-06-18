@@ -10,7 +10,6 @@ const PostsTitle = styled.div`
 `
 
 const Posts = (props) => {
-
     const onAddPost = () => {
         props.addPost()
     }

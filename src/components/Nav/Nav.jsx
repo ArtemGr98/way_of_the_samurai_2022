@@ -32,6 +32,9 @@ const Nav = () => {
             <NavbarLink to="/music">
                 Music
             </NavbarLink>
+            <NavbarLink to="/users">
+                Users
+            </NavbarLink>
             <NavbarLink to="/settings">
                 Settings
             </NavbarLink>

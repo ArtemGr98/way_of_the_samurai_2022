@@ -7,6 +7,7 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import styled from "styled-components";
 import MessagesContainer from "./components/Messages/MessagesContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const AppMain = styled.div`
   padding: 2%;
@@ -24,12 +25,11 @@ const App = () => {
                 <Nav/>
                 <AppContent>
                     <Routes>
-                        <Route path="/profile"
-                               element={<Profile />} />
-                        <Route path="/messages/*"
-                               element={<MessagesContainer />}/>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/messages/*" element={<MessagesContainer />}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
+                        <Route path="/users" element={<UsersContainer/>}/>
                         <Route path="/settings" element={<Settings/>}/>
                     </Routes>
                 </AppContent>
