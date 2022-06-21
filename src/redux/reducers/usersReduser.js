@@ -1,4 +1,4 @@
-import {CHANGE_PAGE, GET_TOTAL_USERS, GET_USERS, TOGGLE_FOLLOW} from "../actions/actionType";
+import {CHANGE_PAGE, GET_TOTAL_USERS, GET_USERS, IS_LOADER, TOGGLE_FOLLOW} from "../actions/actionType";
 
 // usersInfo: [
 //     {
@@ -34,7 +34,8 @@ const initState = {
     usersInfo: [],
     currentPage: 1,
     totalUsers: 0,
-    countUsers: 10,
+    countUsers: 5,
+    isLoader: false
 }
 
 const usersReducer = (state = initState, action) => {
@@ -66,6 +67,11 @@ const usersReducer = (state = initState, action) => {
             return {
                 ...state,
                 currentPage: action.page
+            }
+        case IS_LOADER:
+            return {
+                ...state,
+                isLoader: action.isLoader
             }
 
         default:

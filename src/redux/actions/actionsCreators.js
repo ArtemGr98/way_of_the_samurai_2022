@@ -2,7 +2,7 @@ import {
     ACTIVE_CHAT_ID,
     ADD_MESSAGE,
     ADD_POST, CHANGE_PAGE, GET_TOTAL_USERS,
-    GET_USERS,
+    GET_USERS, IS_LOADER,
     TOGGLE_FOLLOW,
     UPDATE_MESSAGE,
     UPDATE_POST
@@ -19,3 +19,4 @@ export const toggleFollowCreator = (userId) => ({type: TOGGLE_FOLLOW, id: userId
 export const getUsersCreator = (users) => ({type: GET_USERS, users: users})
 export const getTotalUserCreator = (total) => ({type: GET_TOTAL_USERS, total: total})
 export const changePageCreator = (pageNum) => ({type: CHANGE_PAGE, page: pageNum})
+export const isLoaderCreator = (isLoader) => ({type: IS_LOADER, isLoader: isLoader})
