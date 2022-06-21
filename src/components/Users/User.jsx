@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Button} from "../../interface/Button/Button";
+import userPhoto from "../../img/Profile/profileImg.png"
 
 const UserWrapper = styled.div`
   display: flex;
@@ -35,7 +36,9 @@ const User = (props) => {
     return (
         <UserWrapper key={props.user.id}>
             <ImgBlock>
-                <img src={props.user.ava} alt="ava"/>
+                <img
+                    src={(props.user.photos.small) ? props.user.photos.small : userPhoto}
+                    alt="ava"/>
                 <Button onClick={() => onToggleFollow(props.user.id)}>
                     {(props.user.followed) ? "unfollow" : "follow"}
                 </Button>
@@ -45,17 +48,17 @@ const User = (props) => {
                     <div>
                         {props.user.name}
                     </div>
-                    <div>
-                        <div>
-                            {props.user.country}
-                        </div>
-                        <div>
-                            {props.user.city}
-                        </div>
-                    </div>
+                    {/*<div>*/}
+                    {/*    <div>*/}
+                    {/*        {props.user.country}*/}
+                    {/*    </div>*/}
+                    {/*    <div>*/}
+                    {/*        {props.user.city}*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </UserInfoTop>
                 <div>
-                    {props.user.info}
+                    {props.user.status}
                 </div>
             </UserInfo>
         </UserWrapper>
