@@ -1,10 +1,8 @@
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-    changePageCreator,
-    getTotalUserCreator,
-    getUsersCreator, isLoaderCreator,
-    toggleFollowCreator
+    changePage, getTotalUsers, getUsers,
+    isLoaderToggle, toggleFollow
 } from "../../redux/actions/actionsCreators";
 import React from "react";
 import axios from "axios";
@@ -64,24 +62,24 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        toggleFollow: (userId) => {
-            dispatch(toggleFollowCreator(userId))
-        },
-        getUsers: (users) => {
-            dispatch(getUsersCreator(users))
-        },
-        getTotalUsers: (total) => {
-            dispatch(getTotalUserCreator(total))
-        },
-        changePage: (pageNum) => {
-            dispatch(changePageCreator(pageNum))
-        },
-        isLoaderToggle: (isLoader) => {
-            dispatch(isLoaderCreator(isLoader))
-        }
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         toggleFollow: (userId) => {
+//             dispatch(toggleFollowCreator(userId))
+//         },
+//         getUsers: (users) => {
+//             dispatch(getUsersCreator(users))
+//         },
+//         getTotalUsers: (total) => {
+//             dispatch(getTotalUserCreator(total))
+//         },
+//         changePage: (pageNum) => {
+//             dispatch(changePageCreator(pageNum))
+//         },
+//         isLoaderToggle: (isLoader) => {
+//             dispatch(isLoaderCreator(isLoader))
+//         }
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, {toggleFollow, getUsers, getTotalUsers, changePage, isLoaderToggle })(UsersContainer)

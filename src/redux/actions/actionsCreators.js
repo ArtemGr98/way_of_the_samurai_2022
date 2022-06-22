@@ -1,22 +1,23 @@
 import {
     ACTIVE_CHAT_ID,
     ADD_MESSAGE,
-    ADD_POST, CHANGE_PAGE, GET_TOTAL_USERS,
+    ADD_POST, CHANGE_PAGE, GET_PROFILE_INFO, GET_TOTAL_USERS,
     GET_USERS, IS_LOADER,
     TOGGLE_FOLLOW,
     UPDATE_MESSAGE,
     UPDATE_POST
 } from "./actionType";
 
-export const updatePostCreator = (text) => ({type: UPDATE_POST, postText: text})
-export const addPostCreator = () => ({type: ADD_POST})
+export const updatePost = (text) => ({type: UPDATE_POST, text})
+export const addPost = () => ({type: ADD_POST})
+export const getProfileInfo = (profile) => ({type: GET_PROFILE_INFO, profile})
 
-export const updateMessageCreator = (text) => ({type: UPDATE_MESSAGE, messageText: text})
-export const addMessageCreator = () => ({type: ADD_MESSAGE})
-export const activeChatIdCreator = (id) => ({type: ACTIVE_CHAT_ID, id: id})
+export const updateMessage = (text) => ({type: UPDATE_MESSAGE, text})
+export const addMessage = () => ({type: ADD_MESSAGE})
+export const activeChatId = (id) => ({type: ACTIVE_CHAT_ID, id})
 
-export const toggleFollowCreator = (userId) => ({type: TOGGLE_FOLLOW, id: userId})
-export const getUsersCreator = (users) => ({type: GET_USERS, users: users})
-export const getTotalUserCreator = (total) => ({type: GET_TOTAL_USERS, total: total})
-export const changePageCreator = (pageNum) => ({type: CHANGE_PAGE, page: pageNum})
-export const isLoaderCreator = (isLoader) => ({type: IS_LOADER, isLoader: isLoader})
+export const toggleFollow = (id) => ({type: TOGGLE_FOLLOW, id})
+export const getUsers = (users) => ({type: GET_USERS, users})
+export const getTotalUsers = (total) => ({type: GET_TOTAL_USERS, total})
+export const changePage = (page) => ({type: CHANGE_PAGE, page})
+export const isLoaderToggle = (isLoader) => ({type: IS_LOADER, isLoader})

@@ -1,6 +1,7 @@
 import background from "../../../img/Profile/background.jpg";
 import profileImg from "../../../img/Profile/profileImg.png";
 import styled from "styled-components";
+import Loader from "../../common/Loader/Loader";
 
 const ProfileImg= styled.div`
   width: 100%;
@@ -29,6 +30,11 @@ const ProfileDescription = styled.div`
 `
 
 const ProfileInfo = (props) => {
+
+    if (!props.profile) {
+        return <Loader />
+    }
+
     return (
         <div>
             <ProfileImg>
@@ -37,11 +43,16 @@ const ProfileInfo = (props) => {
 
             <ProfileInfoWrapper>
                 <ProfileAva>
-                    <img src={profileImg} alt="profileImg"/>
+                    <img
+                        src={props.profile.photos.large ? props.profile.photos.large : profileImg}
+                        alt="profileImg"/>
                 </ProfileAva>
                 <ProfileDescription>
                     <div>
-                        Artem
+                        {props.profile.fullName}
+                    </div>
+                    <div>
+                        {props.profile.aboutMe}
                     </div>
                 </ProfileDescription>
             </ProfileInfoWrapper>

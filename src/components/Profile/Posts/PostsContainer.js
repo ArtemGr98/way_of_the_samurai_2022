@@ -1,4 +1,4 @@
-import {addPostCreator, updatePostCreator} from "../../../redux/actions/actionsCreators";
+import {addPost, updatePost} from "../../../redux/actions/actionsCreators";
 import Posts from "./Posts";
 import {connect} from "react-redux";
 
@@ -9,17 +9,17 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addPost: () => {
-            dispatch(addPostCreator())
-        },
-        updatePost: (text) => {
-            dispatch(updatePostCreator(text))
-        },
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addPost: () => {
+//             dispatch(addPostCreator())
+//         },
+//         updatePost: (text) => {
+//             dispatch(updatePostCreator(text))
+//         },
+//     }
+// }
 
-const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(Posts)
+const PostsContainer = connect(mapStateToProps, {addPost, updatePost})(Posts)
 
 export default PostsContainer

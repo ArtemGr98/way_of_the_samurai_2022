@@ -2,7 +2,7 @@ import loader from '../../../img/loader2.gif'
 import styled from "styled-components";
 
 const LoaderWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   left: 50%;
   top: 50%;

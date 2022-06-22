@@ -1,5 +1,6 @@
 export const UPDATE_POST = "UPDATE_POST"
 export const ADD_POST = "ADD_POST"
+export const GET_PROFILE_INFO = "GET_PROFILE_INFO"
 
 export const UPDATE_MESSAGE = "UPDATE_MESSAGE"
 export const ADD_MESSAGE = "ADD_MESSAGE"

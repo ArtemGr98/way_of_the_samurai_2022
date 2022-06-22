@@ -36,7 +36,7 @@ const messageReducer = (state = initState, action) => {
         case UPDATE_MESSAGE: {
             return  {
                 ...state,
-                textareaState: action.messageText
+                textareaState: action.text
             }
         }
 

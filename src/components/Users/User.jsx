@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {Button} from "../../interface/Button/Button";
 import userPhoto from "../../img/Profile/profileImg.png"
+import {NavLink} from "react-router-dom";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -36,9 +37,11 @@ const User = (props) => {
     return (
         <UserWrapper key={props.user.id}>
             <ImgBlock>
-                <img
-                    src={(props.user.photos.small) ? props.user.photos.small : userPhoto}
-                    alt="ava"/>
+                <NavLink to={`/profile/${props.user.id}`}>
+                    <img
+                        src={(props.user.photos.small) ? props.user.photos.small : userPhoto}
+                        alt="ava"/>
+                </NavLink>
                 <Button onClick={() => onToggleFollow(props.user.id)}>
                     {(props.user.followed) ? "unfollow" : "follow"}
                 </Button>

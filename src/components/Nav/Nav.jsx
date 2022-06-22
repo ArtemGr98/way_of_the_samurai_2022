@@ -20,7 +20,7 @@ const NavbarLink = styled(NavLink)`
 const Nav = () => {
     return (
         <NavWrapper>
-            <NavbarLink to="/profile">
+            <NavbarLink to="/profile/">
                 Profile
             </NavbarLink>
             <NavbarLink to="/messages">
