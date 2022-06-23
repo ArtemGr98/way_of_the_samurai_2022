@@ -1,8 +1,10 @@
 import logo from '../../img/logo.svg'
 import styled from "styled-components";
+import {NavLink} from "react-router-dom";
 
 const HeaderWrapper = styled.header`
-  text-align: start;
+  display: flex;
+  justify-content: space-between;
   background-color: deepskyblue;
 `
 const Logo = styled.div`
@@ -10,6 +12,7 @@ const Logo = styled.div`
   height: 100px;
   animation: App-logo-spin infinite 20s linear;
   border-radius: 50%;
+
   img {
     width: 100%;
     height: 100%;
@@ -25,12 +28,23 @@ const Logo = styled.div`
   }
 `
 
-const Header = () => {
+const Header = (props) => {
     return (
         <HeaderWrapper>
             <Logo>
                 <img src={logo} alt="logo"/>
             </Logo>
+            <div>
+                {props.isAuthMe ? (
+                    <NavLink to={`/profile/`}>
+                        {props.login}
+                    </NavLink>
+                ) : (
+                    <NavLink to="/login">
+                        Login
+                    </NavLink>
+                )}
+            </div>
         </HeaderWrapper>
     )
 }

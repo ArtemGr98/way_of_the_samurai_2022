@@ -1,4 +1,3 @@
-import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 import {Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
@@ -8,6 +7,7 @@ import styled from "styled-components";
 import MessagesContainer from "./components/Messages/MessagesContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 const AppMain = styled.div`
   padding: 2%;
@@ -20,7 +20,7 @@ const AppContent = styled.div`
 const App = () => {
     return (
         <div className="app">
-            <Header/>
+            <HeaderContainer />
             <AppMain>
                 <Nav/>
                 <AppContent>

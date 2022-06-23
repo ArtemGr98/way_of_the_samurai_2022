@@ -5,20 +5,20 @@ import {
     isLoaderToggle, toggleFollow
 } from "../../redux/actions/actionsCreators";
 import React from "react";
-import axios from "axios";
 import Loader from "../common/Loader/Loader";
+import usersAPI from "../../api/users";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
         this.props.isLoaderToggle(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.countUsers}`)
-            .then(response => {
-                console.log(response)
-                if (response.status === 200) {
+
+        usersAPI.getUsers(this.props.currentPage, this.props.countUsers)
+            .then(data => {
+                if (!data.error) {
                     this.props.isLoaderToggle(false)
-                    this.props.getUsers(response.data.items)
-                    this.props.getTotalUsers(response.data.totalCount)
+                    this.props.getUsers(data.items)
+                    this.props.getTotalUsers(data.totalCount)
                 }
             })
     }
@@ -26,27 +26,27 @@ class UsersContainer extends React.Component {
     onChangePage = (pageNum) => {
         this.props.changePage(pageNum)
         this.props.isLoaderToggle(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNum}&count=${this.props.countUsers}`)
-            .then(response => {
-                console.log(response)
-                if (response.status === 200) {
+
+        usersAPI.getUsers(pageNum, this.props.countUsers)
+            .then(data => {
+                if (!data.error) {
                     this.props.isLoaderToggle(false)
-                    this.props.getUsers(response.data.items)
-                    this.props.getTotalUsers(response.data.totalCount)
+                    this.props.getUsers(data.items)
+                    this.props.getTotalUsers(data.totalCount)
                 }
             })
     }
 
     render() {
         return <>
-            {this.props.isLoader && <Loader />}
+            {this.props.isLoader && <Loader/>}
             <Users
                 users={this.props.users}
                 currentPage={this.props.currentPage}
                 totalUsers={this.props.totalUsers}
                 countUsers={this.props.countUsers}
                 toggleFollow={this.props.toggleFollow}
-                onChangePage={this.onChangePage} />
+                onChangePage={this.onChangePage}/>
         </>
 
     }
@@ -62,24 +62,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         toggleFollow: (userId) => {
-//             dispatch(toggleFollowCreator(userId))
-//         },
-//         getUsers: (users) => {
-//             dispatch(getUsersCreator(users))
-//         },
-//         getTotalUsers: (total) => {
-//             dispatch(getTotalUserCreator(total))
-//         },
-//         changePage: (pageNum) => {
-//             dispatch(changePageCreator(pageNum))
-//         },
-//         isLoaderToggle: (isLoader) => {
-//             dispatch(isLoaderCreator(isLoader))
-//         }
-//     }
-// }
-
-export default connect(mapStateToProps, {toggleFollow, getUsers, getTotalUsers, changePage, isLoaderToggle })(UsersContainer)
+export default connect(mapStateToProps, {
+    toggleFollow,
+    getUsers,
+    getTotalUsers,
+    changePage,
+    isLoaderToggle
+})(UsersContainer)

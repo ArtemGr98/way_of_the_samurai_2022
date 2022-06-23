@@ -1,7 +1,7 @@
 import {
     ACTIVE_CHAT_ID,
     ADD_MESSAGE,
-    ADD_POST, CHANGE_PAGE, GET_PROFILE_INFO, GET_TOTAL_USERS,
+    ADD_POST, AUTH_ME, CHANGE_PAGE, GET_PROFILE_INFO, GET_TOTAL_USERS,
     GET_USERS, IS_LOADER,
     TOGGLE_FOLLOW,
     UPDATE_MESSAGE,
@@ -21,3 +21,5 @@ export const getUsers = (users) => ({type: GET_USERS, users})
 export const getTotalUsers = (total) => ({type: GET_TOTAL_USERS, total})
 export const changePage = (page) => ({type: CHANGE_PAGE, page})
 export const isLoaderToggle = (isLoader) => ({type: IS_LOADER, isLoader})
+
+export const authMe = (email, id, login) => ({type: AUTH_ME, data: {email, id, login}})

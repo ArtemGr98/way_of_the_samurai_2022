@@ -13,20 +13,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         addMessage: () => {
-//             dispatch(addMessageCreator())
-//         },
-//         updateMessage: (text) => {
-//             dispatch(updateMessageCreator(text))
-//         },
-//         activeChatId: (id) => {
-//             dispatch(activeChatIdCreator(id))
-//         }
-//     }
-// }
-
 const MessagesContainer = connect(mapStateToProps, {addMessage, updateMessage, activeChatId})(Messages)
 
 export default MessagesContainer
