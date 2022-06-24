@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {Button} from "../../interface/Button/Button";
 import userPhoto from "../../img/Profile/profileImg.png"
 import {NavLink} from "react-router-dom";
-import usersAPI from "../../api/users";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -30,17 +29,6 @@ const UserInfoTop = styled.div`
 `
 
 const User = (props) => {
-
-    const onToggleFollow = (userId, followed) => {
-        if (!followed) {
-            usersAPI.followUser(userId)
-                .then(data => {(data.resultCode === 0) && props.toggleFollow(userId)})
-        } else {
-            usersAPI.unFollowUser(userId)
-                .then(data => {(data.resultCode === 0) && props.toggleFollow(userId)})
-        }
-    }
-
     return (
         <UserWrapper key={props.user.id}>
             <ImgBlock>
@@ -49,7 +37,8 @@ const User = (props) => {
                         src={(props.user.photos.small) ? props.user.photos.small : userPhoto}
                         alt="ava"/>
                 </NavLink>
-                <Button onClick={() => onToggleFollow(props.user.id, props.user.followed)}>
+                <Button disabled={props.isDisabled.id.includes(props.user.id)}
+                        onClick={() => props.onToggleFollow(props.user.id, props.user.followed)}>
                     {(props.user.followed) ? "unfollow" : "follow"}
                 </Button>
             </ImgBlock>
@@ -58,14 +47,6 @@ const User = (props) => {
                     <div>
                         {props.user.name}
                     </div>
-                    {/*<div>*/}
-                    {/*    <div>*/}
-                    {/*        {props.user.country}*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        {props.user.city}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </UserInfoTop>
                 <div>
                     {props.user.status}

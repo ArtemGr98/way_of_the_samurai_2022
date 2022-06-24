@@ -17,7 +17,7 @@ const Users = (props) => {
     }
 
     const curP = props.currentPage;
-    const curPF = ((curP - 5) < 0) ? 0 : curP - 5 ;
+    const curPF = ((curP - 5) < 0) ? 0 : curP - 5;
     const curPL = curP + 5;
     const slicedPages = pages.slice( curPF, curPL);
 
@@ -31,7 +31,9 @@ const Users = (props) => {
             </div>
             {props.users.map(user => {
                 return (
-                    <User user={user} key={user.id} toggleFollow={props.toggleFollow}/>
+                    <User user={user} key={user.id}
+                          onToggleFollow={props.onToggleFollow}
+                          isDisabled={props.isDisabled}/>
                 )
             })}
         </div>

@@ -1,48 +1,23 @@
-import {CHANGE_PAGE, GET_TOTAL_USERS, GET_USERS, IS_LOADER, TOGGLE_FOLLOW} from "../actions/actionType";
-
-// usersInfo: [
-//     {
-//         id: 1,
-//         ava: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8o4vwBFToOYqPmxz2pIJk9z5mJsLlDrx2jw&usqp=CAU",
-//         followed: true,
-//         name: "Artem",
-//         country: "Ukraine",
-//         city: "Chernihiv",
-//         info: "info"
-//     },
-//     {
-//         id: 2,
-//         ava: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8o4vwBFToOYqPmxz2pIJk9z5mJsLlDrx2jw&usqp=CAU",
-//         followed: true,
-//         name: "Artem",
-//         country: "Ukraine",
-//         city: "Chernihiv",
-//         info: "info"
-//     },
-//     {
-//         id: 3,
-//         ava: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8o4vwBFToOYqPmxz2pIJk9z5mJsLlDrx2jw&usqp=CAU",
-//         followed: false,
-//         name: "Artem",
-//         country: "Ukraine",
-//         city: "Chernihiv",
-//         info: "info"
-//     },
-// ],
+import {CHANGE_PAGE, GET_TOTAL_USERS, GET_USERS, IS_DISABLED, IS_LOADER, TOGGLE_FOLLOW} from "../actions/actionType";
 
 const initState = {
     usersInfo: [],
     currentPage: 1,
     totalUsers: 0,
     countUsers: 5,
-    isLoader: false
+    isLoader: false,
+    isDisabled: {
+        value: false,
+        id: []
+    },
 }
 
 const usersReducer = (state = initState, action) => {
     switch (action.type) {
         case TOGGLE_FOLLOW:
             return {
-                ...state, usersInfo: [...state.usersInfo.map(user => {
+                ...state,
+                usersInfo: [...state.usersInfo.map(user => {
                     if (user.id === action.id) {
                         return {
                             ...user,
@@ -50,9 +25,8 @@ const usersReducer = (state = initState, action) => {
                         }
                     }
                     return user
-                })]
+                })],
             }
-
         case GET_USERS:
             return {
                 ...state,
@@ -72,6 +46,17 @@ const usersReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoader: action.isLoader
+            }
+        case IS_DISABLED:
+            return {
+                ...state,
+                isDisabled: {
+                    value: action.isDisabled,
+                    id: action.isDisabled ?
+                        [...state.isDisabled.id, action.userId]
+                        :
+                        [...state.isDisabled.id.filter(id => id !== action.userId) ]
+                }
             }
 
         default:
