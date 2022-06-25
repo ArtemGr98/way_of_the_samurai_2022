@@ -30,57 +30,49 @@ export const isDisabledToggle = (isDisabled, userId) => ({type: IS_DISABLED, isD
 export const authMe = (email, id, login) => ({type: AUTH_ME, data: {email, id, login}})
 
 //thunks
-export const setUsers = (currentPage, countUsers) => {
-    return dispatch => {
-        dispatch(isLoaderToggle(true))
+export const setUsers = (currentPage, countUsers) => dispatch => {
+    dispatch(isLoaderToggle(true))
 
-        usersAPI.getUsers(currentPage, countUsers)
+    usersAPI.getUsers(currentPage, countUsers)
+        .then(data => {
+            if (!data.error) {
+                dispatch(isLoaderToggle(false))
+                dispatch(getUsers(data.items))
+                dispatch(getTotalUsers(data.totalCount))
+            }
+        })
+}
+
+export const onToggleFollow = (userId, followed) => dispatch => {
+    dispatch(isDisabledToggle(true, userId))
+    if (!followed) {
+        usersAPI.followUser(userId)
             .then(data => {
-                if (!data.error) {
-                    dispatch(isLoaderToggle(false))
-                    dispatch(getUsers(data.items))
-                    dispatch(getTotalUsers(data.totalCount))
-                }
+                (data.resultCode === 0) && dispatch(toggleFollow(userId))
+                dispatch(isDisabledToggle(false, userId))
+            })
+    } else {
+        usersAPI.unFollowUser(userId)
+            .then(data => {
+                (data.resultCode === 0) && dispatch(toggleFollow(userId))
+                dispatch(isDisabledToggle(false, userId))
             })
     }
 }
 
-export const onToggleFollow = (userId, followed) => {
-    return dispatch => {
-        dispatch(isDisabledToggle(true, userId))
-        if (!followed) {
-            usersAPI.followUser(userId)
-                .then(data => {
-                    (data.resultCode === 0) && dispatch(toggleFollow(userId))
-                    dispatch(isDisabledToggle(false, userId))
-                })
-        } else {
-            usersAPI.unFollowUser(userId)
-                .then(data => {
-                    (data.resultCode === 0) && dispatch(toggleFollow(userId))
-                    dispatch(isDisabledToggle(false, userId))
-                })
+export const setProfileInfo = userId => dispatch => {
+    profileAPI.getProfileInfo(userId).then(data => {
+        if (!data.error) {
+            dispatch(getProfileInfo(data))
         }
-    }
+    })
 }
 
-export const setProfileInfo = (userId) => {
-    return dispatch => {
-        profileAPI.getProfileInfo(userId).then(data => {
-            if (!data.error) {
-                dispatch(getProfileInfo(data))
-            }
-        })
-    }
-}
-
-export const setAuthMe = () => {
-    return dispatch => {
-        authAPI.authMe().then(data => {
-            if (data.resultCode === 0) {
-                const {email, id, login} = {...data.data}
-                dispatch(authMe(email, id, login))
-            }
-        })
-    }
+export const setAuthMe = () => dispatch => {
+    authAPI.authMe().then(data => {
+        if (data.resultCode === 0) {
+            const {email, id, login} = {...data.data}
+            dispatch(authMe(email, id, login))
+        }
+    })
 }
