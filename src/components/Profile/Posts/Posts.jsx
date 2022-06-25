@@ -1,4 +1,4 @@
-import Post from "./Post/Post";
+import Post from "./Post";
 import styled from "styled-components";
 import {InputWrapper, PostsButton, Textarea} from "../../../interface/InputWrapper/InputWrapper";
 
@@ -10,6 +10,7 @@ const PostsTitle = styled.div`
 `
 
 const Posts = (props) => {
+
     const onAddPost = () => {
         props.addPost()
     }

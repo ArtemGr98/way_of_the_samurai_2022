@@ -1,5 +1,5 @@
-import profileImg from '../../../../img/Profile/profileImg.png'
-import { Button} from "../../../../interface/Button/Button";
+import profileImg from '../../../img/Profile/profileImg.png'
+import { Button} from "../../../interface/Button/Button";
 import styled from "styled-components";
 
 const PostWrapper = styled.div`

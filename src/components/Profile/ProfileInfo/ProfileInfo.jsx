@@ -2,10 +2,12 @@ import background from "../../../img/Profile/background.jpg";
 import profileImg from "../../../img/Profile/profileImg.png";
 import styled from "styled-components";
 import Loader from "../../common/Loader/Loader";
+import React from "react";
 
-const ProfileImg= styled.div`
+const ProfileImg = styled.div`
   width: 100%;
   height: 300px;
+
   img {
     width: 100%;
     height: 100%;
@@ -19,6 +21,7 @@ const ProfileInfoWrapper = styled.div`
 const ProfileAva = styled.div`
   width: 20%;
   height: 100%;
+
   img {
     width: 100%;
     height: 100%;
@@ -29,35 +32,72 @@ const ProfileDescription = styled.div`
   padding-left: 20px
 `
 
-const ProfileInfo = (props) => {
 
-    if (!props.profile) {
-        return <Loader />
+class ProfileInfo extends React.Component {
+    state = {
+        editMode: false,
+        status: this.props.status
     }
 
-    return (
-        <div>
-            <ProfileImg>
-                <img src={background} alt="background"/>
-            </ProfileImg>
+    editToggle = () => {
+        this.setState({
+            editMode: !this.state.editMode
+        }, () => {
+            if (!this.state.editMode) {
+                this.props.putStatus(this.state.status)
+            }
+        })
+    }
 
-            <ProfileInfoWrapper>
-                <ProfileAva>
-                    <img
-                        src={props.profile.photos.large ? props.profile.photos.large : profileImg}
-                        alt="profileImg"/>
-                </ProfileAva>
-                <ProfileDescription>
-                    <div>
-                        {props.profile.fullName}
-                    </div>
-                    <div>
-                        {props.profile.aboutMe}
-                    </div>
-                </ProfileDescription>
-            </ProfileInfoWrapper>
-        </div>
-    )
+    onChangeStatus = (e) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+
+    render() {
+        if (!this.props.profile) {
+            return <Loader/>
+        }
+
+        return (
+            <div>
+                <ProfileImg>
+                    <img src={background} alt="background"/>
+                </ProfileImg>
+
+                <ProfileInfoWrapper>
+                    <ProfileAva>
+                        <img
+                            src={this.props.profile.photos.large ? this.props.profile.photos.large : profileImg}
+                            alt="profileImg"/>
+                    </ProfileAva>
+                    <ProfileDescription>
+                        <div>
+                            {this.props.profile.fullName}
+                        </div>
+                        <div>
+                            {this.state.editMode ?
+                                <input autoFocus={true} type="text"
+                                       value={this.state.status} onChange={this.onChangeStatus} />
+                                :
+                                <span>
+                                    {this.props.status || "no status"}
+                                </span>
+                            }
+                            <button onClick={this.editToggle}>
+                                edit
+                            </button>
+                        </div>
+                        <div>
+                            {this.props.profile.aboutMe ? this.props.profile.aboutMe : "aboutMe"}
+                        </div>
+
+                    </ProfileDescription>
+                </ProfileInfoWrapper>
+            </div>
+        )
+    }
 }
 
 export default ProfileInfo

@@ -1,11 +1,12 @@
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import PostsContainer from "./Posts/PostsContainer";
+import Posts from "./Posts/Posts";
 
 const Profile = (props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} />
-            <PostsContainer />
+            <ProfileInfo profile={props.profile} status={props.status}
+                         setStatus={props.setStatus} putStatus={props.putStatus} />
+            <Posts textareaState={props.textareaState} postData={props.postData} />
         </div>
     )
 }

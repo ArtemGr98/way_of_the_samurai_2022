@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import React from "react";
 import Profile from "./Profile";
-import {setProfileInfo} from "../../redux/actions/actionsCreators";
+import {addPost, putStatus, setProfileInfo, setStatus, updatePost} from "../../redux/actions/actionsCreators";
 import {
     useLocation,
     useNavigate,
@@ -18,6 +18,7 @@ class ProfileContainer extends React.Component {
             userId = this.props.authMeId
         }
         this.props.setProfileInfo(userId)
+        this.props.setStatus(userId)
     }
 
     render() {
@@ -29,6 +30,9 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profile.profileInfo,
         authMeId: state.authMe.id,
+        textareaState: state.profile.textareaState,
+        postData: state.profile.postData,
+        status: state.profile.status
     }
 }
 
@@ -49,7 +53,7 @@ function withRouter(Component) {
 }
 
 export default compose(
-    connect(mapStateToProps, {setProfileInfo}),
+    connect(mapStateToProps, {setProfileInfo, addPost, updatePost, setStatus, putStatus}),
     withAuthRedirect,
     withRouter
 )(ProfileContainer)

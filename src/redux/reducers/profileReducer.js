@@ -1,4 +1,4 @@
-import {ADD_POST, GET_PROFILE_INFO, UPDATE_POST} from "../actions/actionType";
+import {ADD_POST, GET_PROFILE_INFO, GET_STATUS, UPDATE_POST} from "../actions/actionType";
 
 const initState = {
     postData: [
@@ -22,6 +22,7 @@ const initState = {
         },
     ],
     profileInfo: null,
+    status: '',
     textareaState: '',
 }
 
@@ -50,6 +51,12 @@ const profileReducer = (state = initState, action) => {
             return {
                 ...state,
                 profileInfo: action.profile
+            }
+
+        case GET_STATUS:
+            return {
+                ...state,
+                status: action.status
             }
 
         default:
