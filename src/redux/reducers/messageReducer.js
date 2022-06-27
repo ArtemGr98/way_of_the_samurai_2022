@@ -1,4 +1,4 @@
-import {ACTIVE_CHAT_ID, ADD_MESSAGE, UPDATE_MESSAGE} from "../actions/actionType";
+import {ACTIVE_CHAT_ID, ADD_MESSAGE} from "../actions/actionType";
 
 const initState = {
     chatListData: [
@@ -28,18 +28,10 @@ const initState = {
         },
     ],
     activeChat: '',
-    textareaState: '',
 }
 
 const messageReducer = (state = initState, action) => {
     switch (action.type) {
-        case UPDATE_MESSAGE: {
-            return  {
-                ...state,
-                textareaState: action.text
-            }
-        }
-
         case ADD_MESSAGE: {
             const chatArr = state.chatData
             const id = state.activeChat
@@ -47,7 +39,7 @@ const messageReducer = (state = initState, action) => {
             const currentChat = chatArr.find((chat) => chat.chatId === id)
 
             const chatMessage = {
-                text: state.textareaState,
+                text: action.message,
                 id: currentChat.chatText.length + 1,
                 position: "end"
             }

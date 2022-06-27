@@ -1,7 +1,12 @@
 import {connect} from "react-redux";
 import React from "react";
 import Profile from "./Profile";
-import {addPost, putStatus, setProfileInfo, setStatus, updatePost} from "../../redux/actions/actionsCreators";
+import {
+    addPost,
+    setProfileInfo,
+    setStatus,
+    updateStatus
+} from "../../redux/actions/actionsCreators";
 import {
     useLocation,
     useNavigate,
@@ -30,7 +35,6 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profile.profileInfo,
         authMeId: state.authMe.id,
-        textareaState: state.profile.textareaState,
         postData: state.profile.postData,
         status: state.profile.status
     }
@@ -53,7 +57,7 @@ function withRouter(Component) {
 }
 
 export default compose(
-    connect(mapStateToProps, {setProfileInfo, addPost, updatePost, setStatus, putStatus}),
+    connect(mapStateToProps, {setProfileInfo, addPost, setStatus, updateStatus}),
     withAuthRedirect,
     withRouter
 )(ProfileContainer)

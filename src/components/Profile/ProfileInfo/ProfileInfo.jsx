@@ -44,8 +44,14 @@ class ProfileInfo extends React.Component {
             editMode: !this.state.editMode
         }, () => {
             if (!this.state.editMode) {
-                this.props.putStatus(this.state.status)
+                this.props.updateStatus(this.state.status)
             }
+        })
+    }
+
+    cancel = () => {
+        this.setState({
+            editMode: false
         })
     }
 
@@ -55,11 +61,18 @@ class ProfileInfo extends React.Component {
         })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         if (!this.props.profile) {
             return <Loader/>
         }
-
         return (
             <div>
                 <ProfileImg>
@@ -78,8 +91,13 @@ class ProfileInfo extends React.Component {
                         </div>
                         <div>
                             {this.state.editMode ?
-                                <input autoFocus={true} type="text"
-                                       value={this.state.status} onChange={this.onChangeStatus} />
+                                <div>
+                                    <input autoFocus={true} type="text"
+                                           value={this.state.status} onChange={this.onChangeStatus}/>
+                                    <button onClick={this.cancel}>
+                                        cancel
+                                    </button>
+                                </div>
                                 :
                                 <span>
                                     {this.props.status || "no status"}

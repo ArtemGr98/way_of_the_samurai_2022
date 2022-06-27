@@ -1,6 +1,5 @@
 import {
-    activeChatId,
-    addMessage, updateMessage
+    activeChatId, addMessage
 } from "../../redux/actions/actionsCreators";
 import Messages from "./Messages";
 import {connect} from "react-redux";
@@ -11,11 +10,10 @@ const mapStateToProps = (state) => {
     return {
         chatListData: state.messages.chatListData,
         chatData: state.messages.chatData,
-        textareaState: state.messages.textareaState,
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {addMessage, updateMessage, activeChatId}),
+    connect(mapStateToProps, {addMessage, activeChatId}),
     withAuthRedirect,
 )(Messages)

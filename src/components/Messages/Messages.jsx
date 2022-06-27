@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import ChatListItem from "./ChatListItem/ChatListItem";
 import Chat from "./Chat/Chat";
-import {InputWrapper, PostsButton, Textarea} from "../../interface/InputWrapper/InputWrapper";
 import {Route, Routes} from "react-router-dom";
+import MessageForm from "./MessageForm";
 
 const MessagesWrapper = styled.div`
   display: flex;
@@ -20,13 +20,9 @@ const ChatWrapper = styled.div`
 
 const Messages = (props) => {
 
-    const onAddMessage = () => {
-        props.addMessage()
-    }
-
-    const onUpdateMessage = (e) => {
-        const text = e.target.value
-        props.updateMessage(text)
+    const onSubmitMessageForm = (values, {setSubmitting}) => {
+        props.addMessage(values.message)
+        setSubmitting(false);
     }
 
     return (
@@ -53,13 +49,7 @@ const Messages = (props) => {
                         }
                     )}
                 </Routes>
-
-                <InputWrapper>
-                    <Textarea onChange={onUpdateMessage} value={props.textareaState}/>
-                    <PostsButton onClick={onAddMessage}>
-                        send
-                    </PostsButton>
-                </InputWrapper>
+                <MessageForm onSubmitForm={onSubmitMessageForm} />
             </ChatWrapper>
         </MessagesWrapper>
     )

@@ -1,4 +1,4 @@
-import {ADD_POST, GET_PROFILE_INFO, GET_STATUS, UPDATE_POST} from "../actions/actionType";
+import {ADD_POST, GET_PROFILE_INFO, GET_STATUS} from "../actions/actionType";
 
 const initState = {
     postData: [
@@ -23,27 +23,19 @@ const initState = {
     ],
     profileInfo: null,
     status: '',
-    textareaState: '',
 }
 
 const profileReducer = (state = initState, action) => {
     switch (action.type) {
-        case UPDATE_POST:
-            return {
-                ...state,
-                textareaState: action.text
-            }
-
         case ADD_POST:
             const post = {
-                text: state.textareaState,
+                text: action.post,
                 like: 0,
                 dislike: 0,
                 id: state.postData.length + 1
             }
             return {
                 ...state,
-                textareaState: '',
                 postData: [...state.postData, post]
             }
 

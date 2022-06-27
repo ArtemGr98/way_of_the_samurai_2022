@@ -1,6 +1,6 @@
 import Post from "./Post";
 import styled from "styled-components";
-import {InputWrapper, PostsButton, Textarea} from "../../../interface/InputWrapper/InputWrapper";
+import PostForm from "./PostForm";
 
 const PostsTitle = styled.div`
   text-align: center;
@@ -11,23 +11,14 @@ const PostsTitle = styled.div`
 
 const Posts = (props) => {
 
-    const onAddPost = () => {
-        props.addPost()
-    }
-
-    const onUpdatePost = (e) => {
-        const text = e.target.value
-        props.updatePost(text)
+    const onSubmitPostForm = (values, {setSubmitting}) => {
+        props.addPost(values.post)
+        setSubmitting(false);
     }
 
     return (
         <div>
-            <InputWrapper>
-                <Textarea onChange={onUpdatePost} value={props.textareaState}/>
-                <PostsButton onClick={onAddPost}>
-                    add post
-                </PostsButton>
-            </InputWrapper>
+            <PostForm onSubmitForm={onSubmitPostForm} />
             <div>
                 <PostsTitle>
                     My posts

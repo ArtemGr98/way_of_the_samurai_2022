@@ -2,20 +2,17 @@ import {
     ACTIVE_CHAT_ID, ADD_MESSAGE, ADD_POST, AUTH_ME,
     CHANGE_PAGE, GET_PROFILE_INFO, GET_STATUS, GET_TOTAL_USERS,
     GET_USERS, IS_DISABLED, IS_LOADER, TOGGLE_FOLLOW,
-    UPDATE_MESSAGE, UPDATE_POST
 } from "./actionType";
 import usersAPI from "../../api/users";
 import profileAPI from "../../api/profile";
 import authAPI from "../../api/auth";
 
 //actions
-export const updatePost = text => ({type: UPDATE_POST, text})
-export const addPost = () => ({type: ADD_POST})
+export const addPost = (post) => ({type: ADD_POST, post})
 export const getProfileInfo = profile => ({type: GET_PROFILE_INFO, profile})
 export const getStatus = status => ({type: GET_STATUS, status})
 
-export const updateMessage = text => ({type: UPDATE_MESSAGE, text})
-export const addMessage = () => ({type: ADD_MESSAGE})
+export const addMessage = (message) => ({type: ADD_MESSAGE, message})
 export const activeChatId = id => ({type: ACTIVE_CHAT_ID, id})
 
 export const toggleFollow = id => ({type: TOGGLE_FOLLOW, id})
@@ -72,8 +69,8 @@ export const setStatus = userId => dispatch => {
     })
 }
 
-export const putStatus = status => dispatch => {
-    profileAPI.putStatus(status).then(data => {
+export const updateStatus = status => dispatch => {
+    profileAPI.updateStatus(status).then(data => {
         if (data.resultCode === 0) {
             dispatch(getStatus(status))
         }
