@@ -10,15 +10,9 @@ const PostsTitle = styled.div`
 `
 
 const Posts = (props) => {
-
-    const onSubmitPostForm = (values, {setSubmitting}) => {
-        props.addPost(values.post)
-        setSubmitting(false);
-    }
-
     return (
         <div>
-            <PostForm onSubmitForm={onSubmitPostForm} />
+            <PostForm addPost={props.addPost} />
             <div>
                 <PostsTitle>
                     My posts

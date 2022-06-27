@@ -1,7 +1,5 @@
-import authAPI from "../../api/auth";
-import withForm from "../../hoc/withForm";
-import validationLoginForm from "../common/validation/validationLoginForm";
-import {ErrorMessage, Field, Form} from "formik";
+import {ErrorMessage, Field, Form, withFormik} from "formik";
+import * as Yup from "yup";
 
 const Login = (props) => {
     return (
@@ -26,21 +24,27 @@ const Login = (props) => {
     )
 }
 
-const initialValues = {
-    email: '',
-    password: '',
-    rememberMe: false
-}
+export default withFormik({
+    mapPropsToValues: () => ({
+        email: '',
+        password: '',
+        rememberMe: false
+    }),
 
-const onSubmitLoginForm = (values, {setSubmitting}) => {
-    console.log(values)
-    authAPI.login(values).then(data => {
-        console.log(data)
-        if (data.resultCode !== 0) {
-            alert(data.messages[0])
-        }
-        setSubmitting(false);
-    })
-}
+    validationSchema: Yup.object().shape({
+        email: Yup.string().email()
+            .required("Required"),
+        password: Yup.string()
+            .min(8, "Must be longer than 8 characters")
+            .required("Required"),
+    }),
 
-export default withForm(Login, initialValues, onSubmitLoginForm, validationLoginForm)
+    handleSubmit: (values, formikBag ) => {
+        formikBag.props.authLogin(values).then(() => {
+            formikBag.setSubmitting(false)
+            formikBag.resetForm({})
+        })
+    },
+
+    displayName: 'LoginForm',
+})(Login);

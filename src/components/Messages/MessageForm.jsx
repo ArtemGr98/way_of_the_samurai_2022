@@ -1,6 +1,5 @@
-import {ErrorMessage, Field, Form} from "formik";
-import validationMessageForm from "../common/validation/validationMessageForm";
-import withForm from "../../hoc/withForm";
+import {ErrorMessage, Field, Form, withFormik} from "formik";
+import * as Yup from "yup";
 
 const MessageForm = (props) => {
     return (
@@ -14,9 +13,19 @@ const MessageForm = (props) => {
     )
 }
 
-const initialValues = {
-    message: '',
-}
+export default withFormik({
+    mapPropsToValues: () => ({message: ''}),
 
+    validationSchema: Yup.object().shape({
+        message: Yup.string()
+            .required("Required"),
+    }),
 
-export default withForm(MessageForm, initialValues, validationMessageForm)
+    handleSubmit: (values, formikBag ) => {
+        formikBag.props.addMessage(values.message)
+        formikBag.setSubmitting(false)
+        formikBag.resetForm({})
+    },
+
+    displayName: 'MessageForm',
+})(MessageForm);

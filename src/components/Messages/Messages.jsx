@@ -20,11 +20,6 @@ const ChatWrapper = styled.div`
 
 const Messages = (props) => {
 
-    const onSubmitMessageForm = (values, {setSubmitting}) => {
-        props.addMessage(values.message)
-        setSubmitting(false);
-    }
-
     return (
         <MessagesWrapper>
             <ChatList>
@@ -49,7 +44,7 @@ const Messages = (props) => {
                         }
                     )}
                 </Routes>
-                <MessageForm onSubmitForm={onSubmitMessageForm} />
+                <MessageForm addMessage={props.addMessage} />
             </ChatWrapper>
         </MessagesWrapper>
     )

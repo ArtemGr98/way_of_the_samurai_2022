@@ -1,6 +1,5 @@
-import withForm from "../../../hoc/withForm";
-import validationPostForm from "../../common/validation/validationPostForm";
-import {ErrorMessage, Field, Form} from "formik";
+import {ErrorMessage, Field, Form, withFormik} from "formik";
+import * as Yup from "yup";
 
 const PostForm = (props) => {
     return (
@@ -14,9 +13,19 @@ const PostForm = (props) => {
     )
 }
 
-const initialValues = {
-    post: '',
-}
+export default withFormik({
+    mapPropsToValues: () => ({post: '',}),
 
+    validationSchema: Yup.object().shape({
+        post: Yup.string()
+            .required("Required"),
+    }),
 
-export default withForm(PostForm, initialValues, validationPostForm)
+    handleSubmit: (values, formikBag ) => {
+        formikBag.props.addPost(values.post)
+        formikBag.setSubmitting(false)
+        formikBag.resetForm({})
+    },
+
+    displayName: 'PostForm',
+})(PostForm);

@@ -85,3 +85,12 @@ export const setAuthMe = () => dispatch => {
         }
     })
 }
+
+export const authLogin = loginData => dispatch => {
+    return authAPI.login(loginData).then(data => {
+        if (data.resultCode === 0) {
+            const {email, id, login} = {...data.data}
+            dispatch(authMe(email, id, login))
+        }
+    })
+}
