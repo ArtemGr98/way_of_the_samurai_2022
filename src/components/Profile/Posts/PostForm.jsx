@@ -1,14 +1,18 @@
 import {ErrorMessage, Field, Form, withFormik} from "formik";
 import * as Yup from "yup";
+import {TextareaForm, validationError} from "../../../interface/Form/Form";
+import {Button} from "../../../interface/Button/Button";
 
 const PostForm = (props) => {
     return (
         <Form>
-            <Field type="text" name="post" />
-            <ErrorMessage name="post" component="div" />
-            <button type="submit" disabled={props.isSubmitting}>
+            <div>
+                <Field type="text" name="post" component={TextareaForm} />
+                <ErrorMessage name="post" component={validationError} />
+            </div>
+            <Button type="submit" disabled={!(props.isValid && props.dirty)}>
                 send
-            </button>
+            </Button>
         </Form>
     )
 }
@@ -18,7 +22,7 @@ export default withFormik({
 
     validationSchema: Yup.object().shape({
         post: Yup.string()
-            .required("Required"),
+            .required(""),
     }),
 
     handleSubmit: (values, formikBag ) => {

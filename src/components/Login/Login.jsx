@@ -1,25 +1,27 @@
 import {ErrorMessage, Field, Form, withFormik} from "formik";
 import * as Yup from "yup";
+import {InputForm, validationError} from "../../interface/Form/Form";
+import {Button} from "../../interface/Button/Button";
 
 const Login = (props) => {
     return (
         <Form>
             <h1>Login</h1>
             <div>
-                <Field type="email" name="email" />
-                <ErrorMessage name="email" component="div" />
+                <Field type="email" name="email" component={InputForm} />
+                <ErrorMessage name="email" component={validationError} />
             </div>
             <div>
-                <Field type="password" name="password" />
-                <ErrorMessage name="password" component="div" />
+                <Field type="password" name="password" component={InputForm} />
+                <ErrorMessage name="password" component={validationError} />
             </div>
             <div>
                 <Field type="checkbox" name="rememberMe" id="rememberMe" />
                 <label htmlFor="rememberMe">rememberMe</label>
             </div>
-            <button type="submit" disabled={props.isSubmitting}>
+            <Button type="submit" disabled={props.isSubmitting}>
                 Submit
-            </button>
+            </Button>
         </Form>
     )
 }
@@ -45,6 +47,5 @@ export default withFormik({
             formikBag.resetForm({})
         })
     },
-
     displayName: 'LoginForm',
 })(Login);
