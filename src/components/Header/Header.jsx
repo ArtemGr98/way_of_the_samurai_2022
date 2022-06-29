@@ -36,9 +36,14 @@ const Header = (props) => {
             </Logo>
             <div>
                 {props.isAuthMe ? (
-                    <NavLink to={`/profile/`}>
-                        {props.login}
-                    </NavLink>
+                    <div>
+                        <NavLink to={`/profile/`}>
+                            {props.login}
+                        </NavLink>
+                        <button onClick={props.authLogout}>
+                            log out
+                        </button>
+                    </div>
                 ) : (
                     <NavLink to="/login">
                         Login

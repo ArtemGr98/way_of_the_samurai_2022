@@ -8,7 +8,8 @@ const authAPI = {
             password: loginData.password,
             rememberMe: loginData.rememberMe
         }).then(response => response.data)
-    }
+    },
+    logout: () => instance.delete(`/auth/login`).then(response => response.data)
 }
 
 export default authAPI

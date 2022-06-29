@@ -22,7 +22,7 @@ export const changePage = page => ({type: CHANGE_PAGE, page})
 export const isLoaderToggle = isLoader => ({type: IS_LOADER, isLoader})
 export const isDisabledToggle = (isDisabled, userId) => ({type: IS_DISABLED, isDisabled, userId})
 
-export const authMe = (email, id, login) => ({type: AUTH_ME, data: {email, id, login}})
+export const authMe = (email, id, login, isAuthMe) => ({type: AUTH_ME, data: {email, id, login, isAuthMe}})
 
 //thunks
 export const setUsers = (currentPage, countUsers) => dispatch => {
@@ -81,7 +81,7 @@ export const setAuthMe = () => dispatch => {
     authAPI.authMe().then(data => {
         if (data.resultCode === 0) {
             const {email, id, login} = {...data.data}
-            dispatch(authMe(email, id, login))
+            dispatch(authMe(email, id, login, true))
         }
     })
 }
@@ -89,8 +89,15 @@ export const setAuthMe = () => dispatch => {
 export const authLogin = loginData => dispatch => {
     return authAPI.login(loginData).then(data => {
         if (data.resultCode === 0) {
-            const {email, id, login} = {...data.data}
-            dispatch(authMe(email, id, login))
+            dispatch(setAuthMe())
+        }
+    })
+}
+
+export const authLogout = () => dispatch => {
+    return authAPI.logout().then(data => {
+        if (data.resultCode === 0) {
+            dispatch(authMe(null, null, null, false))
         }
     })
 }

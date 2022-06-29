@@ -13,7 +13,6 @@ const authMeReducer = (state = initState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuthMe: true
             }
 
         default:

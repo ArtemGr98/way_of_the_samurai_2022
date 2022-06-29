@@ -2,8 +2,10 @@ import {ErrorMessage, Field, Form, withFormik} from "formik";
 import * as Yup from "yup";
 import {InputForm, validationError} from "../../interface/Form/Form";
 import {Button} from "../../interface/Button/Button";
+import {Navigate} from "react-router-dom";
 
 const Login = (props) => {
+    if (props.isAuthMe) return <Navigate to="/profile" />
     return (
         <Form>
             <h1>Login</h1>
