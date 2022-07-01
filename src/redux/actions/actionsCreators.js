@@ -1,7 +1,7 @@
 import {
     ACTIVE_CHAT_ID, ADD_MESSAGE, ADD_POST, AUTH_ME,
     CHANGE_PAGE, GET_PROFILE_INFO, GET_STATUS, GET_TOTAL_USERS,
-    GET_USERS, IS_DISABLED, IS_LOADER, TOGGLE_FOLLOW,
+    GET_USERS, INIT_APP, IS_DISABLED, IS_LOADER, TOGGLE_FOLLOW,
 } from "./actionType";
 import usersAPI from "../../api/users";
 import profileAPI from "../../api/profile";
@@ -23,6 +23,9 @@ export const isLoaderToggle = isLoader => ({type: IS_LOADER, isLoader})
 export const isDisabledToggle = (isDisabled, userId) => ({type: IS_DISABLED, isDisabled, userId})
 
 export const authMe = (email, id, login, isAuthMe) => ({type: AUTH_ME, data: {email, id, login, isAuthMe}})
+
+
+export const initApp = () => ({type: INIT_APP})
 
 //thunks
 export const setUsers = (currentPage, countUsers) => dispatch => {
@@ -83,14 +86,18 @@ export const setAuthMe = () => dispatch => {
             const {email, id, login} = {...data.data}
             dispatch(authMe(email, id, login, true))
         }
+        dispatch(initApp())
     })
 }
 
-export const authLogin = loginData => dispatch => {
+export const authLogin = (loginData, setStatus) => dispatch => {
     return authAPI.login(loginData).then(data => {
         if (data.resultCode === 0) {
             dispatch(setAuthMe())
+        } else {
+            setStatus(data.messages[0])
         }
+        return data.resultCode
     })
 }
 

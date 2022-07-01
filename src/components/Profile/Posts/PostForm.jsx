@@ -1,6 +1,6 @@
 import {ErrorMessage, Field, Form, withFormik} from "formik";
 import * as Yup from "yup";
-import {TextareaForm, validationError} from "../../../interface/Form/Form";
+import {TextareaForm, ValidationError} from "../../../interface/Form/Form";
 import {Button} from "../../../interface/Button/Button";
 
 const PostForm = (props) => {
@@ -8,7 +8,7 @@ const PostForm = (props) => {
         <Form>
             <div>
                 <Field type="text" name="post" component={TextareaForm} />
-                <ErrorMessage name="post" component={validationError} />
+                <ErrorMessage name="post" component={ValidationError} />
             </div>
             <Button type="submit" disabled={!(props.isValid && props.dirty)}>
                 send

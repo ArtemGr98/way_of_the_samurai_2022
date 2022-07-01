@@ -15,7 +15,7 @@ export const Input = styled.input`
   border: 1px solid gray;
 `
 
-export const validationError = styled.div`
+export const ValidationError = styled.div`
   font-weight: bold;
   color: red;
 `

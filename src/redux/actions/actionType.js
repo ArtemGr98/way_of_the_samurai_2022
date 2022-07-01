@@ -13,3 +13,5 @@ export const IS_LOADER = "IS_LOADER"
 export const IS_DISABLED = "IS_DISABLED"
 
 export const AUTH_ME = "AUTH_ME"
+
+export const INIT_APP = "INIT_APP"

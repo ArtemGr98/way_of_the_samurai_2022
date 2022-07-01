@@ -1,6 +1,6 @@
 import {ErrorMessage, Field, Form, withFormik} from "formik";
 import * as Yup from "yup";
-import {InputForm, validationError} from "../../interface/Form/Form";
+import {InputForm, ValidationError} from "../../interface/Form/Form";
 import {Button} from "../../interface/Button/Button";
 import {Navigate} from "react-router-dom";
 
@@ -11,16 +11,19 @@ const Login = (props) => {
             <h1>Login</h1>
             <div>
                 <Field type="email" name="email" component={InputForm} />
-                <ErrorMessage name="email" component={validationError} />
+                <ErrorMessage name="email" component={ValidationError} />
             </div>
             <div>
                 <Field type="password" name="password" component={InputForm} />
-                <ErrorMessage name="password" component={validationError} />
+                <ErrorMessage name="password" component={ValidationError} />
             </div>
             <div>
                 <Field type="checkbox" name="rememberMe" id="rememberMe" />
                 <label htmlFor="rememberMe">rememberMe</label>
             </div>
+            <ValidationError>
+                {props.status}
+            </ValidationError>
             <Button type="submit" disabled={props.isSubmitting}>
                 Submit
             </Button>
@@ -44,9 +47,9 @@ export default withFormik({
     }),
 
     handleSubmit: (values, formikBag ) => {
-        formikBag.props.authLogin(values).then(() => {
+        formikBag.props.authLogin(values, formikBag.setStatus).then((resulCode) => {
             formikBag.setSubmitting(false)
-            formikBag.resetForm({})
+            resulCode === 0 && formikBag.resetForm({})
         })
     },
     displayName: 'LoginForm',
