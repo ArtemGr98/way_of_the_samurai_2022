@@ -2,8 +2,10 @@ import background from "../../../img/Profile/background.jpg";
 import profileImg from "../../../img/Profile/profileImg.png";
 import styled from "styled-components";
 import Loader from "../../common/Loader/Loader";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateStatus } from "../../../redux/actions/actionsCreators";
 
 const ProfileImg = styled.div`
   width: 100%;
@@ -34,19 +36,24 @@ const ProfileDescription = styled.div`
 `
 
 
-const ProfileInfo = React.memo((props) => {
+const ProfileInfo = () => {
+
+    const dispatch = useDispatch()
+
+    const profileInfo = useSelector(state => state.profile.profileInfo)
+    const status = useSelector(state => state.profile.status)
 
     const [editMode, setEditMode] = useState(false)
-    const [status, setStatus] = useState(props.status)
+    const [stateStatus, setStatus] = useState(status)
 
     useEffect(() => {
-        setStatus(props.status)
-    }, [props.status])
+        setStatus(status)
+    }, [status])
 
     const editToggle = () => {
         setEditMode(!editMode)
         if (editMode) {
-            props.updateStatus(status)
+            dispatch(updateStatus(stateStatus))
         }
     }
 
@@ -58,7 +65,7 @@ const ProfileInfo = React.memo((props) => {
         setStatus(e.currentTarget.value)
     }
 
-    if (!props.profile) {
+    if (!profileInfo) {
         return <Loader/>
     }
     return (
@@ -70,25 +77,25 @@ const ProfileInfo = React.memo((props) => {
             <ProfileInfoWrapper>
                 <ProfileAva>
                     <img
-                        src={props.profile.photos.large ? props.profile.photos.large : profileImg}
+                        src={profileInfo.photos.large ? profileInfo.photos.large : profileImg}
                         alt="profileImg"/>
                 </ProfileAva>
                 <ProfileDescription>
                     <div>
-                        {props.profile.fullName}
+                        {profileInfo.fullName}
                     </div>
                     <div>
                         {editMode ?
                             <div>
                                 <input autoFocus={true} type="text"
-                                        value={status} onChange={onChangeStatus}/>
+                                        value={stateStatus} onChange={onChangeStatus}/>
                                 <button onClick={cancel}>
                                     cancel
                                 </button>
                             </div>
                             :
                             <span>
-                                {props.status || "no status"}
+                                {status || "no status"}
                             </span>
                         }
                         <button onClick={editToggle}>
@@ -96,13 +103,13 @@ const ProfileInfo = React.memo((props) => {
                         </button>
                     </div>
                     <div>
-                        {props.profile.aboutMe ? props.profile.aboutMe : "aboutMe"}
+                        {profileInfo.aboutMe ? profileInfo.aboutMe : "aboutMe"}
                     </div>
 
                 </ProfileDescription>
             </ProfileInfoWrapper>
         </div>
     )
-})
+}
 
 export default ProfileInfo

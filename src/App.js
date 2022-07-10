@@ -6,13 +6,13 @@ import Settings from "./components/Settings/Settings";
 import styled from "styled-components";
 import MessagesContainer from "./components/Messages/MessagesContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import React from "react";
 import { setAuthMe } from "./redux/actions/actionsCreators";
 import {connect} from "react-redux";
 import Loader from "./components/common/Loader/Loader";
+import Profile from "./components/Profile/Profile";
 
 const AppMain = styled.div`
   padding: 2%;
@@ -37,8 +37,8 @@ class App extends React.Component {
                     <Nav/>
                     <AppContent>
                         <Routes>
-                            <Route path="/profile/" element={<ProfileContainer />} >
-                                <Route path=":userId" element={<ProfileContainer />} />
+                            <Route path="/profile/" element={<Profile />} >
+                                <Route path=":userId" element={<Profile />} />
                             </Route>
                             <Route path="/messages/*" element={<MessagesContainer />}/>
                             <Route path="/news" element={<News/>}/>

@@ -1,7 +1,7 @@
 import Post from "./Post";
 import styled from "styled-components";
 import PostForm from "./PostForm";
-import React from "react";
+import { useSelector } from "react-redux";
 
 const PostsTitle = styled.div`
   text-align: center;
@@ -10,18 +10,21 @@ const PostsTitle = styled.div`
   padding: 40px 0;
 `
 
-const Posts = React.memo((props) => {
+const Posts = () => {
+
+    const postData = useSelector(state => state.profile.postData)
+
     return (
         <div>
-            <PostForm addPost={props.addPost} />
+            <PostForm />
             <div>
                 <PostsTitle>
                     My posts
                 </PostsTitle>
-                {props.postData.map( data => <Post key={data.id} text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
+                {postData.map( data => <Post key={data.id} text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
             </div>
         </div>
     )
-})
+}
 
 export default Posts
