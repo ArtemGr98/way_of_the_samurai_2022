@@ -7,7 +7,6 @@ import {
     setStatus,
     updateStatus
 } from "../../redux/actions/actionsCreators";
-
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import withRouter from "../../hoc/withRouter";

@@ -2,7 +2,8 @@ import background from "../../../img/Profile/background.jpg";
 import profileImg from "../../../img/Profile/profileImg.png";
 import styled from "styled-components";
 import Loader from "../../common/Loader/Loader";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 
 const ProfileImg = styled.div`
   width: 100%;
@@ -33,89 +34,75 @@ const ProfileDescription = styled.div`
 `
 
 
-class ProfileInfo extends React.Component {
-    state = {
-        editMode: false,
-        status: this.props.status
-    }
+const ProfileInfo = React.memo((props) => {
 
-    editToggle = () => {
-        this.setState({
-            editMode: !this.state.editMode
-        }, () => {
-            if (!this.state.editMode) {
-                this.props.updateStatus(this.state.status)
-            }
-        })
-    }
+    const [editMode, setEditMode] = useState(false)
+    const [status, setStatus] = useState(props.status)
 
-    cancel = () => {
-        this.setState({
-            editMode: false
-        })
-    }
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
 
-    onChangeStatus = (e) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.status !== this.props.status) {
-            this.setState({
-                status: this.props.status
-            })
+    const editToggle = () => {
+        setEditMode(!editMode)
+        if (editMode) {
+            props.updateStatus(status)
         }
     }
 
-    render() {
-        if (!this.props.profile) {
-            return <Loader/>
-        }
-        return (
-            <div>
-                <ProfileImg>
-                    <img src={background} alt="background"/>
-                </ProfileImg>
-
-                <ProfileInfoWrapper>
-                    <ProfileAva>
-                        <img
-                            src={this.props.profile.photos.large ? this.props.profile.photos.large : profileImg}
-                            alt="profileImg"/>
-                    </ProfileAva>
-                    <ProfileDescription>
-                        <div>
-                            {this.props.profile.fullName}
-                        </div>
-                        <div>
-                            {this.state.editMode ?
-                                <div>
-                                    <input autoFocus={true} type="text"
-                                           value={this.state.status} onChange={this.onChangeStatus}/>
-                                    <button onClick={this.cancel}>
-                                        cancel
-                                    </button>
-                                </div>
-                                :
-                                <span>
-                                    {this.props.status || "no status"}
-                                </span>
-                            }
-                            <button onClick={this.editToggle}>
-                                edit
-                            </button>
-                        </div>
-                        <div>
-                            {this.props.profile.aboutMe ? this.props.profile.aboutMe : "aboutMe"}
-                        </div>
-
-                    </ProfileDescription>
-                </ProfileInfoWrapper>
-            </div>
-        )
+    const cancel = () => {
+        setEditMode(false)
     }
-}
+
+    const onChangeStatus = (e) => {
+        setStatus(e.currentTarget.value)
+    }
+
+    if (!props.profile) {
+        return <Loader/>
+    }
+    return (
+        <div>
+            <ProfileImg>
+                <img src={background} alt="background"/>
+            </ProfileImg>
+
+            <ProfileInfoWrapper>
+                <ProfileAva>
+                    <img
+                        src={props.profile.photos.large ? props.profile.photos.large : profileImg}
+                        alt="profileImg"/>
+                </ProfileAva>
+                <ProfileDescription>
+                    <div>
+                        {props.profile.fullName}
+                    </div>
+                    <div>
+                        {editMode ?
+                            <div>
+                                <input autoFocus={true} type="text"
+                                        value={status} onChange={onChangeStatus}/>
+                                <button onClick={cancel}>
+                                    cancel
+                                </button>
+                            </div>
+                            :
+                            <span>
+                                {props.status || "no status"}
+                            </span>
+                        }
+                        <button onClick={editToggle}>
+                            edit
+                        </button>
+                    </div>
+                    <div>
+                        {props.profile.aboutMe ? props.profile.aboutMe : "aboutMe"}
+                    </div>
+
+                </ProfileDescription>
+            </ProfileInfoWrapper>
+        </div>
+    )
+})
 
 export default ProfileInfo

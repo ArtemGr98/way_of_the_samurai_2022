@@ -5,6 +5,7 @@ import {
 } from "../../redux/actions/actionsCreators";
 import React from "react";
 import Loader from "../common/Loader/Loader";
+import { countUsers, currentPage, disabled, loader, totalUsers, users } from "../../redux/actions/selectors";
 
 class UsersContainer extends React.Component {
 
@@ -35,12 +36,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users.usersInfo,
-        currentPage: state.users.currentPage,
-        totalUsers: state.users.totalUsers,
-        countUsers: state.users.countUsers,
-        isLoader: state.users.isLoader,
-        isDisabled: state.users.isDisabled
+        users: users(state),
+        currentPage: currentPage(state),
+        totalUsers: totalUsers(state),
+        countUsers: countUsers(state),
+        isLoader: loader(state),
+        isDisabled: disabled(state)
     }
 }
 
