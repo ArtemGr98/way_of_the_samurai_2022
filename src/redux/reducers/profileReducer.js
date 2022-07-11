@@ -1,4 +1,4 @@
-import {ADD_POST, GET_PROFILE_INFO, GET_STATUS} from "../actions/actionType";
+import {ADD_POST, DELETE_POST, GET_PROFILE_INFO, GET_STATUS} from "../actions/actionType";
 
 const initState = {
     postData: [
@@ -37,6 +37,12 @@ const profileReducer = (state = initState, action) => {
             return {
                 ...state,
                 postData: [...state.postData, post]
+            }
+
+        case DELETE_POST:
+            return {
+                ...state,
+                postData: [...state.postData.filter(post => post.id !== action.postId)]
             }
 
         case GET_PROFILE_INFO:

@@ -1,6 +1,7 @@
 export const ADD_POST = "ADD_POST"
 export const GET_PROFILE_INFO = "GET_PROFILE_INFO"
 export const GET_STATUS = "GET_STATUS"
+export const DELETE_POST = "DELETE_POST"
 
 export const ADD_MESSAGE = "ADD_MESSAGE"
 export const ACTIVE_CHAT_ID = "ACTIVE_CHAT_ID"

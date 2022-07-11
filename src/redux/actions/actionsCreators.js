@@ -1,6 +1,6 @@
 import {
     ACTIVE_CHAT_ID, ADD_MESSAGE, ADD_POST, AUTH_ME,
-    CHANGE_PAGE, GET_PROFILE_INFO, GET_STATUS, GET_TOTAL_USERS,
+    CHANGE_PAGE, DELETE_POST, GET_PROFILE_INFO, GET_STATUS, GET_TOTAL_USERS,
     GET_USERS, INIT_APP, IS_DISABLED, IS_LOADER, TOGGLE_FOLLOW,
 } from "./actionType";
 import usersAPI from "../../api/users";
@@ -11,6 +11,7 @@ import authAPI from "../../api/auth";
 export const addPost = (post) => ({type: ADD_POST, post})
 export const getProfileInfo = profile => ({type: GET_PROFILE_INFO, profile})
 export const getStatus = status => ({type: GET_STATUS, status})
+export const deletePost = postId => ({type: DELETE_POST, postId})
 
 export const addMessage = (message) => ({type: ADD_MESSAGE, message})
 export const activeChatId = id => ({type: ACTIVE_CHAT_ID, id})
