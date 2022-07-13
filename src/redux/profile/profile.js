@@ -1,4 +1,10 @@
-import {ADD_POST, DELETE_POST, GET_PROFILE_INFO, GET_STATUS} from "../actions/actionType";
+import profileAPI from "../../api/profile";
+
+
+const ADD_POST = "ADD_POST"
+const GET_PROFILE_INFO = "GET_PROFILE_INFO"
+const GET_STATUS = "GET_STATUS"
+const DELETE_POST = "DELETE_POST"
 
 const initState = {
     postData: [
@@ -25,7 +31,7 @@ const initState = {
     status: '',
 }
 
-const profileReducer = (state = initState, action) => {
+export default function profileReducer(state = initState, action) {
     switch (action.type) {
         case ADD_POST:
             const post = {
@@ -62,4 +68,26 @@ const profileReducer = (state = initState, action) => {
     }
 }
 
-export default profileReducer;
+export const addPost = (post) => ({type: ADD_POST, post})
+export const getProfileInfo = profile => ({type: GET_PROFILE_INFO, profile})
+export const getStatus = status => ({type: GET_STATUS, status})
+export const deletePost = postId => ({type: DELETE_POST, postId})
+
+export const setProfileInfo = userId => async dispatch => {
+    const data = await profileAPI.getProfileInfo(userId)
+    if (!data.error) {
+        dispatch(getProfileInfo(data))
+    }
+}
+
+export const setStatus = userId => async dispatch => {
+    const status = await profileAPI.getStatus(userId)
+    dispatch(getStatus(status))
+}
+
+export const updateStatus = status => async dispatch => {
+    const data = await profileAPI.updateStatus(status)
+    if (data.resultCode === 0) {
+        dispatch(getStatus(status))
+    }
+}

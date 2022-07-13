@@ -1,10 +1,10 @@
-import { INIT_APP } from "../actions/actionType";
+const INIT_APP = "INIT_APP"
 
 const initState = {
     isInitApp: false
 }
 
-const initAppReducer = (state = initState, action) => {
+export default function initAppReducer(state = initState, action) {
     switch (action.type) {
         case INIT_APP:
             return {
@@ -16,4 +16,4 @@ const initAppReducer = (state = initState, action) => {
     }
 }
 
-export default initAppReducer
+export const initApp = () => ({type: INIT_APP})

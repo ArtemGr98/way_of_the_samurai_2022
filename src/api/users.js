@@ -1,19 +1,19 @@
 import {instance} from "./instance";
 
 const usersAPI = {
-    getUsers: (currentPage, countUsers) => {
-        return  instance.get(`/users?page=${currentPage}&count=${countUsers}`)
-            .then(response => response.data)
+    getUsers: async (currentPage, countUsers) => {
+        const response = await instance.get(`/users?page=${currentPage}&count=${countUsers}`)
+        return response.data
     },
 
-    followUser: (userId) => {
-        return instance.post(`follow/${userId}`)
-            .then(response => response.data)
+    followUser: async userId => {
+        const response = await instance.post(`follow/${userId}`)
+        return response.data
     },
 
-    unFollowUser: (userId) => {
-        return instance.delete(`follow/${userId}`)
-            .then(response => response.data)
+    unFollowUser: async userId => {
+        const response = await instance.delete(`follow/${userId}`)
+        return response.data
     },
 }
 

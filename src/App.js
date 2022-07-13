@@ -9,10 +9,11 @@ import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import React from "react";
-import { setAuthMe } from "./redux/actions/actionsCreators";
+
 import {connect} from "react-redux";
 import Loader from "./components/common/Loader/Loader";
 import Profile from "./components/Profile/Profile";
+import {setAuthMe} from "./redux/authMe/authMe";
 
 const AppMain = styled.div`
   padding: 2%;

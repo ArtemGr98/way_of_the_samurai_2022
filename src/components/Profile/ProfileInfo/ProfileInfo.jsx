@@ -5,7 +5,7 @@ import Loader from "../../common/Loader/Loader";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStatus } from "../../../redux/actions/actionsCreators";
+import {updateStatus} from "../../../redux/profile/profile";
 
 const ProfileImg = styled.div`
   width: 100%;

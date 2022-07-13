@@ -1,11 +1,17 @@
 import Users from "./Users";
 import {connect} from "react-redux";
-import {
-    changePage, onToggleFollow, setUsers
-} from "../../redux/actions/actionsCreators";
 import React from "react";
 import Loader from "../common/Loader/Loader";
-import { countUsers, currentPage, disabled, loader, totalUsers, users } from "../../redux/actions/selectors";
+import {
+    changePage,
+    onToggleFollow,
+    setUsers,
+} from "../../redux/users/users";
+import {
+    countUsers, currentPage,
+    disabled, loader,
+    totalUsers, users
+} from "../../redux/users/usersSelectors";
 
 class UsersContainer extends React.Component {
 

@@ -1,4 +1,5 @@
-import {ACTIVE_CHAT_ID, ADD_MESSAGE} from "../actions/actionType";
+const ADD_MESSAGE = "ADD_MESSAGE"
+const ACTIVE_CHAT_ID = "ACTIVE_CHAT_ID"
 
 const initState = {
     chatListData: [
@@ -30,7 +31,7 @@ const initState = {
     activeChat: '',
 }
 
-const messageReducer = (state = initState, action) => {
+export default function messageReducer(state = initState, action) {
     switch (action.type) {
         case ADD_MESSAGE: {
             const chatArr = state.chatData
@@ -68,4 +69,5 @@ const messageReducer = (state = initState, action) => {
     }
 }
 
-export default messageReducer
+export const addMessage = (message) => ({type: ADD_MESSAGE, message})
+export const activeChatId = id => ({type: ACTIVE_CHAT_ID, id})

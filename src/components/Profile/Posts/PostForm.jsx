@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import {TextareaForm, ValidationError} from "../../../interface/Form/Form";
 import {Button} from "../../../interface/Button/Button";
 import { useDispatch } from "react-redux";
-import { addPost } from "../../../redux/actions/actionsCreators";
+import {addPost} from "../../../redux/profile/profile";
 
 const PostForm = () => {
 

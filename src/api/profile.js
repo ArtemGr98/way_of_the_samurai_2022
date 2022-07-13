@@ -1,18 +1,19 @@
 import {instance} from "./instance";
 
 const profileAPI = {
-    getProfileInfo: (userId) => {
-        return instance.get(`profile/${userId}`)
-            .then(response => response.data)
+    getProfileInfo: async userId => {
+        const response = await instance.get(`profile/${userId}`)
+        return response.data
     },
-    getStatus: (userId) => {
-        return instance.get(`profile/status/${userId}`)
-            .then(response => response.data)
+    getStatus: async userId => {
+        const response = await instance.get(`profile/status/${userId}`)
+            return response.data
     },
-    updateStatus: (status) => {
-        return instance.put(`profile/status`, {
+    updateStatus: async status => {
+        const response = await instance.put(`profile/status`, {
             status: status
-        }).then(response => response.data)
+        })
+        return response.data
     }
 }
 

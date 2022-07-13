@@ -1,10 +1,8 @@
-import {
-    activeChatId, addMessage
-} from "../../redux/actions/actionsCreators";
 import Messages from "./Messages";
 import {connect} from "react-redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {activeChatId, addMessage} from "../../redux/messages/messages";
 
 const mapStateToProps = (state) => {
     return {
