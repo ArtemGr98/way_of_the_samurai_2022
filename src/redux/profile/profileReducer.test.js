@@ -1,5 +1,5 @@
-import { deletePost } from "./actions/actionsCreators"
-import profileReducer from "./profile"
+
+import profileReducer, {deletePost} from "./profile"
 
 const state = {
     postData: [
