@@ -14,6 +14,18 @@ const profileAPI = {
             status: status
         })
         return response.data
+    },
+    savePhoto: async photoFile => {
+        const response = await instance.put('/profile/photo', {image: photoFile}, {
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        })
+        return response.data
+    },
+    editProfileInfo: async profileInfo => {
+        const response = await instance.put(`profile`, profileInfo)
+        return response.data
     }
 }
 

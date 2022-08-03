@@ -12,8 +12,10 @@ const Profile = () => {
 
     let {userId} = useParams();
     const authMe = useSelector(state => state.authMe.id)
+    let isMyProfile = false
 
     if (!userId) {
+        isMyProfile = true
         userId = authMe
     }
 
@@ -30,7 +32,7 @@ const Profile = () => {
 
     return (
         <div>
-            <ProfileInfo />
+            <ProfileInfo isMyProfile={isMyProfile} />
             <Posts />
         </div>
     )
