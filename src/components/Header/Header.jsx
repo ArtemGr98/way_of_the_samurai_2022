@@ -1,6 +1,8 @@
 import logo from '../../img/logo.svg'
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { authLogout } from '../../redux/authMe/authMe';
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -28,19 +30,23 @@ const Logo = styled.div`
   }
 `
 
-const Header = (props) => {
+const Header = () => {
+
+    const dispatch = useDispatch()
+    const {isAuthMe, login} = useSelector(state => state.authMe)
+    
     return (
         <HeaderWrapper>
             <Logo>
                 <img src={logo} alt="logo"/>
             </Logo>
             <div>
-                {props.isAuthMe ? (
+                {isAuthMe ? (
                     <div>
                         <NavLink to={`/profile/`}>
-                            {props.login}
+                            {login}
                         </NavLink>
-                        <button onClick={props.authLogout}>
+                        <button onClick={() => dispatch(authLogout())}>
                             log out
                         </button>
                     </div>

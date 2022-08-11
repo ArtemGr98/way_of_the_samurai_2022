@@ -2,6 +2,9 @@ import styled from "styled-components";
 import {Button} from "../../interface/Button/Button";
 import userPhoto from "../../img/Profile/profileImg.png"
 import {NavLink} from "react-router-dom";
+import { onToggleFollow } from "../../redux/users/users";
+import { useSelector } from "react-redux";
+import { disabled } from "../../redux/users/usersSelectors";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -29,6 +32,9 @@ const UserInfoTop = styled.div`
 `
 
 const User = (props) => {
+
+    const isDisabled = useSelector(disabled())
+
     return (
         <UserWrapper key={props.user.id}>
             <ImgBlock>
@@ -37,8 +43,8 @@ const User = (props) => {
                         src={(props.user.photos.small) ? props.user.photos.small : userPhoto}
                         alt="ava"/>
                 </NavLink>
-                <Button disabled={props.isDisabled.id.includes(props.user.id)}
-                        onClick={() => props.onToggleFollow(props.user.id, props.user.followed)}>
+                <Button disabled={isDisabled.id.includes(props.user.id)}
+                        onClick={() => onToggleFollow(props.user.id, props.user.followed)}>
                     {(props.user.followed) ? "unfollow" : "follow"}
                 </Button>
             </ImgBlock>
