@@ -4,7 +4,6 @@ import userPhoto from "../../img/Profile/profileImg.png"
 import {NavLink} from "react-router-dom";
 import { onToggleFollow } from "../../redux/users/users";
 import { useSelector } from "react-redux";
-import { disabled } from "../../redux/users/usersSelectors";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -33,7 +32,7 @@ const UserInfoTop = styled.div`
 
 const User = (props) => {
 
-    const isDisabled = useSelector(disabled())
+    const isDisabled = useSelector(state => state.users.isDisabled)
 
     return (
         <UserWrapper key={props.user.id}>

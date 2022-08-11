@@ -3,11 +3,10 @@ import Pagination from "../common/Pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { changePage, setUsers } from "../../redux/users/users";
-import { usersState } from "../../redux/users/usersSelectors";
 
 const Users = () => {
-
-    const {users, currentPage, countUsers} = useSelector(usersState())
+    const usersState = useSelector(state => state.users)
+    const {usersInfo, currentPage, countUsers} = usersState
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,8 +20,8 @@ const Users = () => {
 
     return (
         <div>
-            <Pagination {...usersState()} onChangePage={onChangePage} />
-            {users.map(user => {
+            <Pagination {...usersState} onChangePage={onChangePage} />
+            {usersInfo.map(user => {
                 return (
                     <User user={user} key={user.id}/>
                 )

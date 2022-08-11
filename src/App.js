@@ -11,7 +11,7 @@ import {setAuthMe} from "./redux/authMe/authMe";
 import Header from "./components/Header/Header";
 
 const MessagesContainer = React.lazy(() => import("./components/Messages/MessagesContainer"))
-const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
+const Users = React.lazy(() => import("./components/Users/Users"))
 const Login = React.lazy(() => import("./components/Login/Login"))
 const Profile = React.lazy(() => import("./components/Profile/Profile"))
 
@@ -47,7 +47,7 @@ const App = () => {
                             <Route path="/messages/*" element={<MessagesContainer/>}/>
                             <Route path="/news" element={<News/>}/>
                             <Route path="/music" element={<Music/>}/>
-                            <Route path="/users" element={<UsersContainer/>}/>
+                            <Route path="/users" element={<Users/>}/>
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/login" element={<Login/>}/>
                         </Routes>
