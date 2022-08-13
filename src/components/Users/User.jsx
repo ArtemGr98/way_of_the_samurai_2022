@@ -3,7 +3,7 @@ import {Button} from "../../interface/Button/Button";
 import userPhoto from "../../img/Profile/profileImg.png"
 import {NavLink} from "react-router-dom";
 import { onToggleFollow } from "../../redux/users/users";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -30,31 +30,31 @@ const UserInfoTop = styled.div`
   justify-content: space-between;
 `
 
-const User = (props) => {
-
+const User = ({user}) => {
     const isDisabled = useSelector(state => state.users.isDisabled)
+    const dispatch = useDispatch()
 
     return (
-        <UserWrapper key={props.user.id}>
+        <UserWrapper key={user.id}>
             <ImgBlock>
-                <NavLink to={`/profile/${props.user.id}`}>
+                <NavLink to={`/profile/${user.id}`}>
                     <img
-                        src={(props.user.photos.small) ? props.user.photos.small : userPhoto}
+                        src={(user.photos.small) ? user.photos.small : userPhoto}
                         alt="ava"/>
                 </NavLink>
-                <Button disabled={isDisabled.id.includes(props.user.id)}
-                        onClick={() => onToggleFollow(props.user.id, props.user.followed)}>
-                    {(props.user.followed) ? "unfollow" : "follow"}
+                <Button disabled={isDisabled.id.includes(user.id)}
+                        onClick={() => dispatch(onToggleFollow(user.id, user.followed))}>
+                    {(user.followed) ? "unfollow" : "follow"}
                 </Button>
             </ImgBlock>
             <UserInfo>
                 <UserInfoTop>
                     <div>
-                        {props.user.name}
+                        {user.name}
                     </div>
                 </UserInfoTop>
                 <div>
-                    {props.user.status}
+                    {user.status}
                 </div>
             </UserInfo>
         </UserWrapper>
