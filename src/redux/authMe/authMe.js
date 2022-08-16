@@ -1,43 +1,41 @@
+import { createSlice } from '@reduxjs/toolkit'
 import authAPI from "../../api/auth";
 import {initApp} from "../initApp/initApp";
 
-
-const AUTH_ME = "AUTH_ME"
-const GET_CAPTCHA_URL_SUCCESS = "GET_CAPTCHA_URL_SUCCESS"
-
-const initState = {
-    email: null,
-    id: null,
-    login: null,
-    isAuthMe: false,
+const initialState = {
+    authMeData: {
+        email: null,
+        id: null,
+        login: null,
+        isAuthMe: false,
+    },
     captcha: null
 }
 
-export default function authMeReducer(state = initState, action) {
-    switch (action.type) {
-        case AUTH_ME:
-            return {
-                ...state,
-                ...action.data,
-            }
-        case GET_CAPTCHA_URL_SUCCESS:
-            return {
-                ...state,
-                captcha: action.captchaUrl
-            }
-        default:
-            return state
+const authMeSlice = createSlice({
+    name: 'authMe',
+    initialState,
+    reducers: {
+        authMe: (state, action) => {
+            state.authMeData = action.payload
+        },
+        getCaptchaUrlSuccess: (state, action) => {
+            state.captcha = action.payload
+        }
     }
-}
+})
 
-export const authMe = (email, id, login, isAuthMe) => ({type: AUTH_ME, data: {email, id, login, isAuthMe}})
-export const getCaptchaUrlSuccess = captchaUrl => ({type: GET_CAPTCHA_URL_SUCCESS, captchaUrl})
+export default authMeSlice.reducer
+export const {authMe, getCaptchaUrlSuccess} = authMeSlice.actions
 
 export const setAuthMe = () => async dispatch => {
     const data = await authAPI.authMe()
     if (data.resultCode === 0) {
-        const {email, id, login} = {...data.data}
-        dispatch(authMe(email, id, login, true))
+        const payload = {
+            ...data.data,
+            isAuthMe: true
+        }
+        dispatch(authMe(payload))
     }
     dispatch(initApp())
 }
@@ -60,7 +58,11 @@ export const authLogin = (loginData, setStatus) => async dispatch => {
 export const authLogout = () => async dispatch => {
     const data = await authAPI.logout()
     if (data.resultCode === 0) {
-        dispatch(authMe(null, null, null, false))
+        const payload = {
+            ...data.data,
+            isAuthMe: false
+        }
+        dispatch(authMe(payload))
     }
 }
 

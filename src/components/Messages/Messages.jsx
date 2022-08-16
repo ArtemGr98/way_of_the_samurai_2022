@@ -3,6 +3,7 @@ import ChatListItem from "./ChatListItem/ChatListItem";
 import Chat from "./Chat/Chat";
 import {Route, Routes} from "react-router-dom";
 import MessageForm from "./MessageForm";
+import {useSelector} from "react-redux";
 
 const MessagesWrapper = styled.div`
   display: flex;
@@ -18,17 +19,20 @@ const ChatWrapper = styled.div`
   padding: 20px;
 `
 
-const Messages = (props) => {
+const Messages = () => {
+
+    const chatListData = useSelector(state => state.messages.chatListData)
+    const chatData = useSelector(state => state.messages.chatData)
 
     return (
         <MessagesWrapper>
             <ChatList>
-                {props.chatListData.map(data => <ChatListItem
-                    name={data.name} id={data.id} key={data.id} activeChatId={props.activeChatId} />)}
+                {chatListData.map(data => <ChatListItem
+                    name={data.name} id={data.id} key={data.id} />)}
             </ChatList>
             <ChatWrapper>
                 <Routes>
-                    {props.chatData.map(data => {
+                    {chatData.map(data => {
                         return (
                             <Route path={`/${data.chatId}`}
                                    key={data.chatId}
@@ -44,7 +48,7 @@ const Messages = (props) => {
                         }
                     )}
                 </Routes>
-                <MessageForm addMessage={props.addMessage} />
+                <MessageForm />
             </ChatWrapper>
         </MessagesWrapper>
     )

@@ -1,7 +1,6 @@
-const ADD_MESSAGE = "ADD_MESSAGE"
-const ACTIVE_CHAT_ID = "ACTIVE_CHAT_ID"
+import { createSlice } from '@reduxjs/toolkit'
 
-const initState = {
+const initialState = {
     chatListData: [
         {name: "name1", id: 1},
         {name: "name2", id: 2},
@@ -31,43 +30,34 @@ const initState = {
     activeChat: '',
 }
 
-export default function messageReducer(state = initState, action) {
-    switch (action.type) {
-        case ADD_MESSAGE: {
+const messagesSlice = createSlice({
+    name: "messages",
+    initialState,
+    reducers: {
+        addMessage: (state, action) => {
             const chatArr = state.chatData
             const id = state.activeChat
 
             const currentChat = chatArr.find((chat) => chat.chatId === id)
 
             const chatMessage = {
-                text: action.message,
+                text: action.payload,
                 id: currentChat.chatText.length + 1,
                 position: "end"
             }
-            return {
-                ...state,
-                textareaState: '',
-                chatData: [...state.chatData.map(chat => {
-                    if (chat.chatId === id) {
-                        chat.chatText.push(chatMessage)
-                        console.log('push', chat)
-                    }
-                    return chat
-                })]
-            }
+            state.textareaState = ''
+            state.chatData.map(chat => {
+                if (chat.chatId === id) {
+                    chat.chatText.push(chatMessage)
+                }
+                return chat
+            })
+        },
+        activeChatId: (state, action) => {
+            state.activeChat = action.payload
         }
-
-        case ACTIVE_CHAT_ID: {
-            return  {
-                ...state,
-                activeChat: action.id
-            }
-        }
-
-        default:
-            return state
     }
-}
+})
 
-export const addMessage = (message) => ({type: ADD_MESSAGE, message})
-export const activeChatId = id => ({type: ACTIVE_CHAT_ID, id})
+export default messagesSlice.reducer
+export const {addMessage, activeChatId} = messagesSlice.actions

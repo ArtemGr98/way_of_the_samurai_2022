@@ -1,13 +1,7 @@
 import profileAPI from "../../api/profile";
+import { createSlice } from '@reduxjs/toolkit'
 
-
-const ADD_POST = "ADD_POST"
-const GET_PROFILE_INFO = "GET_PROFILE_INFO"
-const GET_STATUS = "GET_STATUS"
-const DELETE_POST = "DELETE_POST"
-const SAVE_PHOTO = 'SAVE_PHOTO'
-
-const initState = {
+const initialState = {
     postData: [
         {
             text: "post text",
@@ -15,69 +9,41 @@ const initState = {
             dislike: 1,
             id: 1
         },
-        {
-            text: "post text2",
-            like: 43,
-            dislike: 12,
-            id: 2
-        },
-        {
-            text: "post text3",
-            like: 14,
-            dislike: 21,
-            id: 3
-        },
     ],
     profileInfo: null,
     status: '',
 }
 
-export default function profileReducer(state = initState, action) {
-    switch (action.type) {
-        case ADD_POST:
+const profileSlice = createSlice({
+    name: 'profile',
+    initialState,
+    reducers: {
+        addPost: (state, action) => {
             const post = {
-                text: action.post,
+                text: action.payload,
                 like: 0,
                 dislike: 0,
                 id: state.postData.length + 1
             }
-            return {
-                ...state,
-                postData: [...state.postData, post]
-            }
-
-        case DELETE_POST:
-            return {
-                ...state,
-                postData: [...state.postData.filter(post => post.id !== action.postId)]
-            }
-
-        case GET_PROFILE_INFO:
-            return {
-                ...state,
-                profileInfo: action.profile
-            }
-
-        case GET_STATUS:
-            return {
-                ...state,
-                status: action.status
-            }
-        case SAVE_PHOTO:
-            return {
-                ...state, profileInfo: {...state.profileInfo, photos: action.photos}
-            }
-
-        default:
-            return state
+            state.postData.push(post)
+        },
+        deletePost: (state, action) => {
+            state.postData.filter(post => post.id !== action.payload)
+        },
+        getProfileInfo: (state, action) => {
+            state.profileInfo = action.payload
+        },
+        getStatus: (state, action) => {
+            state.status = action.payload
+        },
+        savePhoto: (state, action) => {
+            state.profileInfo.photos = action.payload
+        }
     }
-}
+}) 
 
-export const addPost = post => ({type: ADD_POST, post})
-export const getProfileInfo = profile => ({type: GET_PROFILE_INFO, profile})
-export const getStatus = status => ({type: GET_STATUS, status})
-export const deletePost = postId => ({type: DELETE_POST, postId})
-export const savePhotoSuccess = photos => ({type: SAVE_PHOTO, photos})
+export const {addPost, deletePost, getProfileInfo, getStatus, savePhoto} = profileSlice.actions
+export default profileSlice.reducer
 
 
 export const setProfileInfo = userId => async dispatch => {
@@ -94,8 +60,6 @@ export const setStatus = userId => async dispatch => {
     } catch(err) {
         console.log(err)
     }
-
-
 }
 
 export const updateStatus = status => async dispatch => {
@@ -107,13 +71,12 @@ export const updateStatus = status => async dispatch => {
     } catch (err){
         console.log(err)
     }
-
 }
 
-export const savePhoto = photo => async dispatch => {
+export const savePhotoAsync = photo => async dispatch => {
     const data = await profileAPI.savePhoto(photo)
     if (data.resultCode === 0) {
-        dispatch(savePhotoSuccess(data.data.photos))
+        dispatch(savePhoto(data.data.photos))
     }
 }
 

@@ -1,19 +1,16 @@
-const INIT_APP = "INIT_APP"
+import { createSlice } from '@reduxjs/toolkit'
 
-const initState = {
-    isInitApp: false
-}
-
-export default function initAppReducer(state = initState, action) {
-    switch (action.type) {
-        case INIT_APP:
-            return {
-                ...state,
-                isInitApp: true
-            }
-        default:
-            return state;
+const initAppSlice = createSlice({
+    name: 'initApp',
+    initialState: {
+        isInitApp: false
+    },
+    reducers: {
+        initApp: state => {
+            state.isInitApp = true
+        }
     }
-}
+})
 
-export const initApp = () => ({type: INIT_APP})
+export default initAppSlice.reducer
+export const {initApp} = initAppSlice.actions

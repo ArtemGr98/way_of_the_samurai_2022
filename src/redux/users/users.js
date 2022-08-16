@@ -1,14 +1,7 @@
+import { createSlice } from '@reduxjs/toolkit'
 import usersAPI from "../../api/users";
 
-
-const TOGGLE_FOLLOW = "TOGGLE_FOLLOW"
-const GET_USERS = "GET_USERS"
-const GET_TOTAL_USERS = "GET_TOTAL_USERS"
-const CHANGE_PAGE = "CHANGE_PAGE"
-const IS_LOADER = "IS_LOADER"
-const IS_DISABLED = "IS_DISABLED"
-
-const initState = {
+const initialState = {
     usersInfo: [],
     currentPage: 1,
     totalUsers: 0,
@@ -20,64 +13,37 @@ const initState = {
     },
 }
 
-export default function usersReducer(state = initState, action) {
-    switch (action.type) {
-        case TOGGLE_FOLLOW:
-            return {
-                ...state,
-                usersInfo: [...state.usersInfo.map(user => {
-                    if (user.id === action.id) {
-                        return {
-                            ...user,
-                            followed: !user.followed
-                        }
-                    }
-                    return user
-                })],
-            }
-        case GET_USERS:
-            return {
-                ...state,
-                usersInfo: [...action.users]
-            }
-        case GET_TOTAL_USERS:
-            return {
-                ...state,
-                totalUsers: action.total
-            }
-        case CHANGE_PAGE:
-            return {
-                ...state,
-                currentPage: action.page
-            }
-        case IS_LOADER:
-            return {
-                ...state,
-                isLoader: action.isLoader
-            }
-        case IS_DISABLED:
-            return {
-                ...state,
-                isDisabled: {
-                    value: action.isDisabled,
-                    id: action.isDisabled ?
-                        [...state.isDisabled.id, action.userId]
-                        :
-                        [...state.isDisabled.id.filter(id => id !== action.userId) ]
-                }
-            }
-
-        default:
-            return state
+const usersSlice = createSlice({
+    name: 'users',
+    initialState,
+    reducers: {
+        toggleFollow: (state, action) => {
+            const user = state.usersInfo.find(user => user.id === action.payload)
+            user.followed = !user.followed
+        },
+        getUsers: (state, action) => {
+            state.usersInfo = [...action.payload]
+        },
+        getTotalUsers: (state, action) => {
+            state.totalUsers = action.payload
+        },
+        changePage: (state, action) => {
+            state.currentPage = action.payload
+        },
+        isLoaderToggle: (state, action) => {
+            state.isLoader = action.payload
+        },
+        isDisabledToggle: (state, action) => {
+            state.isDisabled.value = action.payload.isDisabled
+            state.isDisabled.value ? state.isDisabled.id.push(action.payload.userId) :
+                state.isDisabled.id = state.isDisabled.id.filter(id => id !== action.payload.userId)
+        }
     }
-}
+})
 
-export const toggleFollow = id => ({type: TOGGLE_FOLLOW, id})
-export const getUsers = users => ({type: GET_USERS, users})
-export const getTotalUsers = total => ({type: GET_TOTAL_USERS, total})
-export const changePage = page => ({type: CHANGE_PAGE, page})
-export const isLoaderToggle = isLoader => ({type: IS_LOADER, isLoader})
-export const isDisabledToggle = (isDisabled, userId) => ({type: IS_DISABLED, isDisabled, userId})
+export default usersSlice.reducer
+export const {toggleFollow, getUsers, getTotalUsers,
+    changePage, isLoaderToggle, isDisabledToggle} = usersSlice.actions
 
 export const setUsers = (currentPage, countUsers) => async dispatch => {
     dispatch(isLoaderToggle(true))
@@ -91,14 +57,14 @@ export const setUsers = (currentPage, countUsers) => async dispatch => {
 }
 
 export const onToggleFollow = (userId, followed) => async dispatch => {
-    dispatch(isDisabledToggle(true, userId))
+    dispatch(isDisabledToggle({isDisabled: true, userId}))
     if (!followed) {
         const data = await usersAPI.followUser(userId)
         data.resultCode === 0 && dispatch(toggleFollow(userId))
-        dispatch(isDisabledToggle(false, userId))
+        dispatch(isDisabledToggle({isDisabled: false, userId}))
     } else {
         const data = await usersAPI.unFollowUser(userId)
         data.resultCode === 0 && dispatch(toggleFollow(userId))
-        dispatch(isDisabledToggle(false, userId))
+        dispatch(isDisabledToggle({isDisabled: false, userId}))
     }
 }

@@ -1,20 +1,18 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import messageReducer from "./messages/messages";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import authMeReducer from "./authMe/authMe";
+import initAppReducer from "./initApp/initApp";
 import profileReducer from "./profile/profile";
 import usersReducer from "./users/users";
-import authMeReducer from "./authMe/authMe";
-import thunk from "redux-thunk";
-import initAppReducer from "./initApp/initApp";
-import {composeWithDevTools} from "@redux-devtools/extension";
+import messagesReducer from "./messages/messages";
 
-const reducers = combineReducers({
-    messages: messageReducer,
+const rootReducer = combineReducers({
     profile: profileReducer,
-    users: usersReducer,
-    authMe: authMeReducer,
     initApp: initAppReducer,
+    authMe: authMeReducer,
+    users: usersReducer,
+    messages: messagesReducer
 })
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))
-
-export default store
+export const store = configureStore({
+    reducer: rootReducer
+})

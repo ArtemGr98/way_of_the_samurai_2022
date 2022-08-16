@@ -4,7 +4,7 @@ import Loader from "../../common/Loader/Loader";
 import {useState} from "react";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {savePhoto, updateStatus} from "../../../redux/profile/profile";
+import {savePhotoAsync, updateStatus} from "../../../redux/profile/profile";
 import {EditProfileInfoForm} from "./EditProfileInfoForm";
 
 const ProfileInfoWrapper = styled.div`
@@ -67,7 +67,7 @@ const ProfileInfo = ({isMyProfile}) => {
     const onChangePhoto = (e) => {
         const files = e.target.files
         if (files.length) {
-            dispatch(savePhoto(files[0]))
+            dispatch(savePhotoAsync(files[0]))
         }
     }
 

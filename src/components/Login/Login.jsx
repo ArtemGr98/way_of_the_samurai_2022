@@ -4,7 +4,7 @@ import {InputForm, ValidationError} from "../../interface/Form/Form";
 import {Button} from "../../interface/Button/Button";
 import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {authLogin} from "../../redux/authMe/authMe";
+import {authLogin} from "../../redux/authMe/authMe"
 
 const Login = () => {
     const dispatch = useDispatch()

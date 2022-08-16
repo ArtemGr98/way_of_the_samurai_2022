@@ -33,7 +33,7 @@ const Logo = styled.div`
 const Header = () => {
 
     const dispatch = useDispatch()
-    const {isAuthMe, login} = useSelector(state => state.authMe)
+    const {isAuthMe, login} = useSelector(state => state.authMe.authMeData)
     
     return (
         <HeaderWrapper>

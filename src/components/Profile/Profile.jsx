@@ -11,7 +11,7 @@ import {setProfileInfo, setStatus} from "../../redux/profile/profile";
 const Profile = () => {
 
     let {userId} = useParams();
-    const authMe = useSelector(state => state.authMe.id)
+    const authMe = useSelector(state => state.authMe.authMeData.id)
     let isMyProfile = false
 
     if (!userId) {
