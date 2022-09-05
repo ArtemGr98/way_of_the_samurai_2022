@@ -1,6 +1,7 @@
 import profileImg from '../../../img/Profile/profileImg.png'
 import { Button} from "../../../interface/Button/Button";
 import styled from "styled-components";
+import {useRemovePostMutation} from "../../../redux/profile/profileQueryApi";
 
 const PostWrapper = styled.div`
   display: flex;
@@ -23,7 +24,9 @@ const PostButton = styled(Button)`
   margin-right: 10px;
 `
 
-const Post = (props) => {
+const Post = ({id, ...props}) => {
+    const [removePost] = useRemovePostMutation()
+
     return (
         <PostWrapper>
             <PostAva>
@@ -40,6 +43,7 @@ const Post = (props) => {
                     <PostButton>
                         dislike: {props.dislike}
                     </PostButton>
+                    <button onClick={() => removePost(id)}>x</button>
                 </div>
             </PostTextWrapper>
         </PostWrapper>

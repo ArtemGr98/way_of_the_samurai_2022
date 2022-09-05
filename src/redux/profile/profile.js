@@ -37,7 +37,7 @@ const profileSlice = createSlice({
             state.status = action.payload
         },
         savePhoto: (state, action) => {
-            state.profileInfo.photos = action.payload
+            state.profileInfo.photos = action.payload.small
         }
     }
 }) 

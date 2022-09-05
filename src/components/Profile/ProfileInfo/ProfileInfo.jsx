@@ -6,6 +6,12 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {savePhotoAsync, updateStatus} from "../../../redux/profile/profile";
 import {EditProfileInfoForm} from "./EditProfileInfoForm";
+import {useParams} from "react-router-dom";
+import {
+    useGetProfileInfoQuery,
+    useGetStatusQuery, useSavePhotoMutation,
+    useUpdateStatusMutation
+} from "../../../redux/profile/profileQueryApi";
 
 const ProfileInfoWrapper = styled.div`
   margin-top: 20px;
@@ -35,11 +41,27 @@ const EditBtn = styled.button`
 `
 
 
-const ProfileInfo = ({isMyProfile}) => {
+const ProfileInfo = () => {
+
+    let {userId} = useParams();
+    const authMe = useSelector(state => state.authMe.authMeData.id)
+    let isMyProfile = false
+
+    if (!userId) {
+        isMyProfile = true
+        userId = authMe
+    }
+
+    const {data: profileInfo, isLoading, isError, error} = useGetProfileInfoQuery(userId)
+    const {data: status} = useGetStatusQuery(userId)
+
+    const [updateStatusMutation] = useUpdateStatusMutation()
+    const [savePhoto] = useSavePhotoMutation()
+
     const dispatch = useDispatch()
 
-    const profileInfo = useSelector(state => state.profile.profileInfo)
-    const status = useSelector(state => state.profile.status)
+    // const profileInfo = useSelector(state => state.profile.profileInfo)
+    // const status = useSelector(state => state.profile.status)
 
     const [editMode, setEditMode] = useState(false)
     const [editModeStatus, setEditModeStatus] = useState(false)
@@ -49,34 +71,36 @@ const ProfileInfo = ({isMyProfile}) => {
         setStatus(status)
     }, [status])
 
-    const editToggle = () => {
-        setEditMode(!editMode)
-    }
     const editToggleStatus = () => {
         setEditModeStatus(!editModeStatus)
         if (editModeStatus) {
-            dispatch(updateStatus(stateStatus))
-        }
-    }
-    const cancel = () => {
-        setEditModeStatus(false)
-    }
-    const onChangeStatus = (e) => {
-        setStatus(e.currentTarget.value)
-    }
-    const onChangePhoto = (e) => {
-        const files = e.target.files
-        if (files.length) {
-            dispatch(savePhotoAsync(files[0]))
+            // dispatch(updateStatus(stateStatus))
+            updateStatusMutation(stateStatus).unwrap()
         }
     }
 
-    if (!profileInfo) {
+    const onChangePhoto = async (e) => {
+        let target = e.target
+        const files = target.files
+
+        if (files.length) {
+            //dispatch(savePhotoAsync(files[0]))
+            await savePhoto(files[0])
+            target.value = null
+        }
+    }
+
+    if (isLoading) {
         return <Loader/>
     }
+
+    if (isError) {
+        return <div>Status: {error.status}</div>
+    }
+
     return (
         <ProfileTop>
-            {editMode ? <EditProfileInfoForm profileInfo={profileInfo} setEditMode={setEditMode} /> :
+            {editMode ? <EditProfileInfoForm profileInfo={profileInfo} setEditMode={setEditMode}/> :
                 <ProfileInfoWrapper>
                     <ProfileAva>
                         <img
@@ -92,8 +116,9 @@ const ProfileInfo = ({isMyProfile}) => {
                             {editModeStatus ?
                                 <div>
                                     <input autoFocus={true} type="text"
-                                           value={stateStatus} onChange={onChangeStatus}/>
-                                    <button onClick={cancel}>
+                                           value={stateStatus}
+                                           onChange={(e) => setStatus(e.currentTarget.value)}/>
+                                    <button onClick={() => setEditModeStatus(false)}>
                                         cancel
                                     </button>
                                 </div>
@@ -112,7 +137,7 @@ const ProfileInfo = ({isMyProfile}) => {
                 </ProfileInfoWrapper>
             }
 
-            {isMyProfile && <EditBtn onClick={editToggle}>edit</EditBtn>}
+            {isMyProfile && <EditBtn onClick={() => setEditMode(!editMode)}>edit</EditBtn>}
         </ProfileTop>
     )
 }

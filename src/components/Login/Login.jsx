@@ -8,7 +8,7 @@ import {authLogin} from "../../redux/authMe/authMe"
 
 const Login = () => {
     const dispatch = useDispatch()
-    const isAuthMe = useSelector(state => state.authMe.isAuthMe)
+    const isAuthMe = useSelector(state => state.authMe.authMeData.isAuthMe)
     const captcha = useSelector(state => state.authMe.captcha)
 
     if (isAuthMe) return <Navigate to="/profile"/>

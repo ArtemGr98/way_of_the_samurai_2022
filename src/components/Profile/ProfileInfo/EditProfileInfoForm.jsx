@@ -4,11 +4,14 @@ import {InputForm, ValidationError} from "../../../interface/Form/Form";
 import {Button} from "../../../interface/Button/Button";
 import {editProfileInfo} from "../../../redux/profile/profile";
 import {useDispatch, useSelector} from "react-redux";
+import {useEditProfileInfoMutation} from "../../../redux/profile/profileQueryApi";
 
 export const EditProfileInfoForm = ({profileInfo, setEditMode}) => {
 
     const dispatch = useDispatch()
-    const myId = useSelector(state => state.profile.profileInfo.userId)
+    const myId = useSelector(state => state.authMe.authMeData.id)
+
+    const [editProfileInfoMutation] = useEditProfileInfoMutation()
 
     return (
         <Formik
@@ -22,12 +25,13 @@ export const EditProfileInfoForm = ({profileInfo, setEditMode}) => {
                     .required(""),
             })}
             onSubmit={async (values, actions) => {
-                const responseData = await dispatch(editProfileInfo(values, myId))
-                if (responseData.resultCode === 0) {
+                // const responseData = await dispatch(editProfileInfo(values, myId))
+                const responseData = await editProfileInfoMutation(values, myId)
+                if (responseData.data.resultCode === 0) {
                     setEditMode(false)
                 }
                 else {
-                    actions.setStatus(responseData.messages[0])
+                    actions.setStatus(responseData.data.messages[0])
                 }
                 actions.setSubmitting(false);
             }}

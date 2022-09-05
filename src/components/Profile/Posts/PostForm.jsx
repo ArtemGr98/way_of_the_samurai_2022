@@ -3,11 +3,14 @@ import * as Yup from "yup";
 import {TextareaForm, ValidationError} from "../../../interface/Form/Form";
 import {Button} from "../../../interface/Button/Button";
 import { useDispatch } from "react-redux";
-import {addPost} from "../../../redux/profile/profile";
+// import {addPost} from "../../../redux/profile/profile";
+import {useAddPostMutation} from "../../../redux/profile/profileQueryApi";
 
 const PostForm = () => {
 
     const dispatch = useDispatch()
+
+    const [addPost] = useAddPostMutation()
 
     return (
         <Formik
@@ -16,13 +19,9 @@ const PostForm = () => {
                 post: Yup.string()
                     .required(""),
             })}
-            onSubmit={(values, actions) => { 
-                dispatch(addPost(values.post))
-                actions.resetForm({
-                    values: {
-                        post: ''
-                    }
-                })
+            onSubmit={(values, actions) => {
+                addPost(values.post)
+                actions.resetForm()
                 //actions.setSubmitting(false);
             }}
         >

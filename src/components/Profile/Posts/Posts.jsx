@@ -2,6 +2,8 @@ import Post from "./Post";
 import styled from "styled-components";
 import PostForm from "./PostForm";
 import { useSelector } from "react-redux";
+import {useGetPostsQuery} from "../../../redux/profile/profileQueryApi";
+import Loader from "../../common/Loader/Loader";
 
 const PostsTitle = styled.div`
   text-align: center;
@@ -12,9 +14,12 @@ const PostsTitle = styled.div`
 
 const Posts = () => {
 
-    const postData = useSelector(state => state.profile.postData)
+    //const postData = useSelector(state => state.profile.postData)
+    const {data: postData, isLoading} = useGetPostsQuery()
+    console.log(postData)
 
-    return (
+    return <>
+        {isLoading ? <Loader/> :
         <div>
             <PostForm />
             <div>
@@ -23,8 +28,9 @@ const Posts = () => {
                 </PostsTitle>
                 {postData.map( data => <Post key={data.id} text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
             </div>
-        </div>
-    )
+        </div>}
+    </>
+
 }
 
 export default Posts

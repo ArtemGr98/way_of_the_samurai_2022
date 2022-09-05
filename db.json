@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "text": "sdfsfds",
+      "like": 0,
+      "dislike": 0,
+      "id": 1
+    },
+    {
+      "text": "sdfddf",
+      "like": 0,
+      "dislike": 0,
+      "id": 2
+    }
+  ]
+}
