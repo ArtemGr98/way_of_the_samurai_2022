@@ -24,7 +24,7 @@ const PostButton = styled(Button)`
   margin-right: 10px;
 `
 
-const Post = ({id, ...props}) => {
+const Post = ({id, text, like, dislike}) => {
     const [removePost] = useRemovePostMutation()
 
     return (
@@ -34,14 +34,14 @@ const Post = ({id, ...props}) => {
             </PostAva>
             <PostTextWrapper>
                 <PostText>
-                    {props.text}
+                    {text}
                 </PostText>
                 <div>
                     <PostButton>
-                        like: {props.like}
+                        like: {like}
                     </PostButton>
                     <PostButton>
-                        dislike: {props.dislike}
+                        dislike: {dislike}
                     </PostButton>
                     <button onClick={() => removePost(id)}>x</button>
                 </div>

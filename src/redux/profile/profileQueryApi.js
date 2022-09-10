@@ -1,30 +1,12 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import instanceApi from "../instanceQueryApi";
 
 let postLength;
 
-export const profileQueryApi = createApi({
-    reducerPath: 'profileQueryApi',
-    baseQuery: fetchBaseQuery(
-        {
-            baseUrl: 'https://social-network.samuraijs.com/api/1.0/',
-            prepareHeaders: (headers) => {
-                headers.set('API-KEY', 'cedc5812-f528-4e57-b86d-d6fab8633f1f')
-                return headers
-            },
-            credentials: "include",
-        }
-    ),
-    tagTypes: ['ProfileInfo', 'Status', 'Posts'],
+export const profileQueryApi = instanceApi.injectEndpoints({
     endpoints: (build) => ({
         getProfileInfo: build.query({
             query: (userId) => `/profile/${userId}`,
-            providesTags: (result, error, id) => {
-                console.log("RESULT", result)
-                console.log("error", error)
-                console.log("arg", id)
-                return [{type: 'ProfileInfo', id: "LIST"}, {type: 'ProfileInfo', id: 123}]
-            }
-
+            providesTags: ['ProfileInfo']
         }),
         editProfileInfo: build.mutation({
             query: (body) => ({
@@ -32,12 +14,7 @@ export const profileQueryApi = createApi({
                 method: 'PUT',
                 body,
             }),
-            invalidatesTags: (result, error, arg) => {
-                console.log("RESULT2", result)
-                console.log("error2", error)
-                console.log("arg2", arg)
-                return [{type: 'ProfileInfo', id: 123}]
-            }
+            invalidatesTags: ['ProfileInfo']
         }),
         getStatus: build.query({
             query: (userId) => `/profile/status/${userId}`,
@@ -90,10 +67,7 @@ export const profileQueryApi = createApi({
                     body: post
                 }
             },
-            invalidatesTags: ({id}) => {
-                console.log(id)
-                return [{type: "Posts", id: "LIST"}]
-            }
+            invalidatesTags: () => [{type: "Posts", id: "LIST"}]
         }),
         removePost: build.mutation({
             query: (id) => ({

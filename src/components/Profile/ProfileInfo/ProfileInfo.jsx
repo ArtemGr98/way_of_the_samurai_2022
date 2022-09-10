@@ -41,16 +41,7 @@ const EditBtn = styled.button`
 `
 
 
-const ProfileInfo = () => {
-
-    let {userId} = useParams();
-    const authMe = useSelector(state => state.authMe.authMeData.id)
-    let isMyProfile = false
-
-    if (!userId) {
-        isMyProfile = true
-        userId = authMe
-    }
+const ProfileInfo = ({userId, isMyProfile}) => {
 
     const {data: profileInfo, isLoading, isError, error} = useGetProfileInfoQuery(userId)
     const {data: status} = useGetStatusQuery(userId)
@@ -58,8 +49,7 @@ const ProfileInfo = () => {
     const [updateStatusMutation] = useUpdateStatusMutation()
     const [savePhoto] = useSavePhotoMutation()
 
-    const dispatch = useDispatch()
-
+    // const dispatch = useDispatch()
     // const profileInfo = useSelector(state => state.profile.profileInfo)
     // const status = useSelector(state => state.profile.status)
 

@@ -12,11 +12,17 @@ import Login from "../Login/Login";
 
 const Profile = () => {
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
+    let {userId} = useParams();
     const authMe = useSelector(state => state.authMe.authMeData.id)
+    let isMyProfile = false
 
+    if (!userId) {
+        isMyProfile = true
+        userId = authMe
+    }
+
+    // const navigate = useNavigate()
+    // const dispatch = useDispatch()
     // useEffect(() => {
     //     if (!authMe) {
     //         return navigate('/login')
@@ -25,15 +31,14 @@ const Profile = () => {
     //     dispatch(setStatus(userId))
     // }, [userId, dispatch, authMe, navigate])
 
-
     if (!authMe) {
         return <Navigate to='/login' />
     }
 
     return (
         <div>
-            <ProfileInfo />
-            <Posts />
+            <ProfileInfo userId={userId} isMyProfile={isMyProfile} />
+            {isMyProfile && <Posts />}
         </div>
     )
 }

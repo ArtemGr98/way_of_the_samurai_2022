@@ -16,7 +16,6 @@ const Posts = () => {
 
     //const postData = useSelector(state => state.profile.postData)
     const {data: postData, isLoading} = useGetPostsQuery()
-    console.log(postData)
 
     return <>
         {isLoading ? <Loader/> :
@@ -24,7 +23,7 @@ const Posts = () => {
             <PostForm />
             <div>
                 <PostsTitle>
-                    My posts
+                    Posts
                 </PostsTitle>
                 {postData.map( data => <Post key={data.id} text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
             </div>
