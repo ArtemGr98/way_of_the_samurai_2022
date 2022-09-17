@@ -1,17 +1,18 @@
-import profileImg from "../../../img/Profile/profileImg.png";
+// import profileImg from "../../../img/Profile/profileImg";
 import styled from "styled-components";
 import Loader from "../../common/Loader/Loader";
-import {useState} from "react";
+import {FC, useState} from "react";
 import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {savePhotoAsync, updateStatus} from "../../../redux/profile/profile";
+// import {useDispatch, useSelector} from "react-redux";
+// import {savePhotoAsync, updateStatus} from "../../../redux/profile/profile";
 import {EditProfileInfoForm} from "./EditProfileInfoForm";
-import {useParams} from "react-router-dom";
+// import {useParams} from "react-router-dom";
 import {
     useGetProfileInfoQuery,
     useGetStatusQuery, useSavePhotoMutation,
     useUpdateStatusMutation
 } from "../../../redux/profile/profileQueryApi";
+
 
 const ProfileInfoWrapper = styled.div`
   margin-top: 20px;
@@ -40,8 +41,12 @@ const EditBtn = styled.button`
   right: 0;
 `
 
+interface ProfileInfoProps {
+    userId: number;
+    isMyProfile: boolean;
+}
 
-const ProfileInfo = ({userId, isMyProfile}) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({userId, isMyProfile}) => {
 
     const {data: profileInfo, isLoading, isError, error} = useGetProfileInfoQuery(userId)
     const {data: status} = useGetStatusQuery(userId)
@@ -65,11 +70,13 @@ const ProfileInfo = ({userId, isMyProfile}) => {
         setEditModeStatus(!editModeStatus)
         if (editModeStatus) {
             // dispatch(updateStatus(stateStatus))
-            updateStatusMutation(stateStatus).unwrap()
+            if (stateStatus) {
+                updateStatusMutation(stateStatus).unwrap()
+            }
         }
     }
 
-    const onChangePhoto = async (e) => {
+    const onChangePhoto = async (e: any) => {
         let target = e.target
         const files = target.files
 
@@ -85,22 +92,22 @@ const ProfileInfo = ({userId, isMyProfile}) => {
     }
 
     if (isError) {
-        return <div>Status: {error.status}</div>
+        return <div>Error</div>
     }
-
+    
     return (
         <ProfileTop>
             {editMode ? <EditProfileInfoForm profileInfo={profileInfo} setEditMode={setEditMode}/> :
                 <ProfileInfoWrapper>
                     <ProfileAva>
                         <img
-                            src={profileInfo.photos.large ? profileInfo.photos.large : profileImg}
+                            src={profileInfo?.photos?.large && profileInfo.photos.large}
                             alt="profileImg"/>
                         {isMyProfile && <input type="file" onChange={onChangePhoto}/>}
                     </ProfileAva>
                     <ProfileDescription>
                         <div>
-                            {profileInfo.fullName}
+                            {profileInfo?.fullName}
                         </div>
                         <div>
                             {editModeStatus ?
@@ -121,7 +128,7 @@ const ProfileInfo = ({userId, isMyProfile}) => {
                             </button>}
                         </div>
                         <div>
-                            {profileInfo.aboutMe ? profileInfo.aboutMe : "aboutMe"}
+                            {profileInfo?.aboutMe ? profileInfo.aboutMe : "aboutMe"}
                         </div>
                     </ProfileDescription>
                 </ProfileInfoWrapper>

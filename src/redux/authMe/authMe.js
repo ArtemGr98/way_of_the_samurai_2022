@@ -1,6 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import authAPI from "../../api/auth";
 import {initApp} from "../initApp/initApp";
+
+// type authMeDataT = {
+//     email: null | string,
+//     id: null | number,
+//     login: null | string,
+//     isAuthMe: boolean,
+// }
+//
+// type initialStateT = {
+//     authMeData: authMeDataT,
+//     captcha: null | string
+// }
 
 const initialState = {
     authMeData: {

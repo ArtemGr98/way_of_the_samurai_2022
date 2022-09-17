@@ -1,14 +1,15 @@
 import instanceApi from "../instanceQueryApi";
+import {IPosts, IProfileInfo} from "./profileQueryApiTypes";
 
-let postLength;
+let postLength: number;
 
 export const profileQueryApi = instanceApi.injectEndpoints({
     endpoints: (build) => ({
-        getProfileInfo: build.query({
+        getProfileInfo: build.query<IProfileInfo, number>({
             query: (userId) => `/profile/${userId}`,
             providesTags: ['ProfileInfo']
         }),
-        editProfileInfo: build.mutation({
+        editProfileInfo: build.mutation<void, IProfileInfo>({
             query: (body) => ({
                 url: 'profile',
                 method: 'PUT',
@@ -16,11 +17,11 @@ export const profileQueryApi = instanceApi.injectEndpoints({
             }),
             invalidatesTags: ['ProfileInfo']
         }),
-        getStatus: build.query({
+        getStatus: build.query<string, number>({
             query: (userId) => `/profile/status/${userId}`,
             providesTags: ['Status'],
         }),
-        updateStatus: build.mutation({
+        updateStatus: build.mutation<void, string>({
             query: (status) => ({
                 url: 'profile/status',
                 method: 'PUT',
@@ -28,8 +29,9 @@ export const profileQueryApi = instanceApi.injectEndpoints({
             }),
             invalidatesTags: ['Status']
         }),
-        savePhoto: build.mutation({
+        savePhoto: build.mutation<void, any>({
             query: (photoFile) => {
+                console.log(photoFile)
                 let formData = new FormData()
                 formData.append("image", photoFile)
                 return {
@@ -40,20 +42,22 @@ export const profileQueryApi = instanceApi.injectEndpoints({
             },
             invalidatesTags: ['ProfileInfo']
         }),
-        getPosts: build.query({
+        getPosts: build.query<IPosts[], void>({
             query: () => 'http://localhost:3001/posts',
             providesTags: (result) => {
-                postLength = result.length
+                if (result) {
+                    postLength = result.length
+                }
                 return result ?
                     [
-                        ...result.map(({id}) => ({type: "Posts", id})),
+                        ...result.map(({id}) => ({type: "Posts" as const, id})),
                         {type: 'Posts', id: 'LIST'}
                     ]
                     : [{type: 'Posts', id: 'LIST'}]
             }
 
         }),
-        addPost: build.mutation({
+        addPost: build.mutation<IPosts, string>({
             query: (newPostText,) => {
                 const post = {
                     text: newPostText,
@@ -69,12 +73,12 @@ export const profileQueryApi = instanceApi.injectEndpoints({
             },
             invalidatesTags: () => [{type: "Posts", id: "LIST"}]
         }),
-        removePost: build.mutation({
+        removePost: build.mutation<IPosts, number>({
             query: (id) => ({
                 url: `http://localhost:3001/posts/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ({id}) => [{type: "Posts", id}]
+            invalidatesTags: (result, error, arg, meta) => [{type: "Posts", id: arg}]
         })
     })
 })
