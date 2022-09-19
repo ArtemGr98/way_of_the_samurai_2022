@@ -15,13 +15,13 @@ export interface IPhotos {
 }
 
 export interface IProfileInfo {
-    aboutMe?: string;
-    contacts?: IContacts;
-    lookingForAJob?: boolean;
-    lookingForAJobDescription?: string;
+    aboutMe: string;
+    contacts: IContacts;
+    lookingForAJob: boolean;
+    lookingForAJobDescription: string;
     fullName: string;
     userId: number;
-    photos?: IPhotos;
+    photos: IPhotos;
 }
 
 export interface IPosts {

@@ -78,7 +78,7 @@ export const profileQueryApi = instanceApi.injectEndpoints({
                 url: `http://localhost:3001/posts/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: (result, error, arg, meta) => [{type: "Posts", id: arg}]
+            invalidatesTags: (result, error, arg) => [{type: "Posts", id: arg}]
         })
     })
 })
