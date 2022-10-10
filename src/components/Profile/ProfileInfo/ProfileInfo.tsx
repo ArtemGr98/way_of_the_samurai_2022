@@ -1,12 +1,8 @@
-// import profileImg from "../../../img/Profile/profileImg";
 import styled from "styled-components";
 import Loader from "../../common/Loader/Loader";
-import {FC, useState} from "react";
+import {ChangeEvent, FC, useState} from "react";
 import {useEffect} from "react";
-// import {useDispatch, useSelector} from "react-redux";
-// import {savePhotoAsync, updateStatus} from "../../../redux/profile/profile";
 import {EditProfileInfoForm} from "./EditProfileInfoForm";
-// import {useParams} from "react-router-dom";
 import {
     useGetProfileInfoQuery,
     useGetStatusQuery, useSavePhotoMutation,
@@ -42,7 +38,7 @@ const EditBtn = styled.button`
 `
 
 interface ProfileInfoProps {
-    userId: number;
+    userId: string;
     isMyProfile: boolean;
 }
 
@@ -54,10 +50,6 @@ const ProfileInfo: FC<ProfileInfoProps> = ({userId, isMyProfile}) => {
     const [updateStatusMutation] = useUpdateStatusMutation()
     const [savePhoto] = useSavePhotoMutation()
 
-    // const dispatch = useDispatch()
-    // const profileInfo = useSelector(state => state.profile.profileInfo)
-    // const status = useSelector(state => state.profile.status)
-
     const [editMode, setEditMode] = useState(false)
     const [editModeStatus, setEditModeStatus] = useState(false)
     const [stateStatus, setStatus] = useState(status)
@@ -68,22 +60,18 @@ const ProfileInfo: FC<ProfileInfoProps> = ({userId, isMyProfile}) => {
 
     const editToggleStatus = () => {
         setEditModeStatus(!editModeStatus)
-        if (editModeStatus) {
-            // dispatch(updateStatus(stateStatus))
-            if (stateStatus) {
-                updateStatusMutation(stateStatus).unwrap()
-            }
+        if (editModeStatus && stateStatus) {
+            updateStatusMutation(stateStatus).unwrap()
         }
     }
 
-    const onChangePhoto = async (e: any) => {
+    const onChangePhoto = async (e: ChangeEvent<HTMLInputElement>) => {
         let target = e.target
         const files = target.files
 
-        if (files.length) {
-            //dispatch(savePhotoAsync(files[0]))
+        if (files) {
             await savePhoto(files[0])
-            target.value = null
+            target.value = ''
         }
     }
 
@@ -97,7 +85,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({userId, isMyProfile}) => {
     
     return (
         <ProfileTop>
-            {editMode ? <EditProfileInfoForm profileInfo={profileInfo} setEditMode={setEditMode}/> :
+            {editMode && profileInfo ? <EditProfileInfoForm profileInfo={profileInfo} setEditMode={setEditMode}/> :
                 <ProfileInfoWrapper>
                     <ProfileAva>
                         <img
@@ -128,7 +116,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({userId, isMyProfile}) => {
                             </button>}
                         </div>
                         <div>
-                            {profileInfo?.aboutMe ? profileInfo.aboutMe : "aboutMe"}
+                            {profileInfo?.aboutMe || "aboutMe"}
                         </div>
                     </ProfileDescription>
                 </ProfileInfoWrapper>

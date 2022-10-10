@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
 
+
 const InstanceQueryApi = createApi({
     reducerPath: 'profileQueryApi',
     baseQuery: fetchBaseQuery(

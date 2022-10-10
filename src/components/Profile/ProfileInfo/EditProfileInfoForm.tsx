@@ -2,14 +2,19 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {InputForm, ValidationError} from "../../../interface/Form/Form";
 import {Button} from "../../../interface/Button/Button";
-import {editProfileInfo} from "../../../redux/profile/profile";
-import {useDispatch, useSelector} from "react-redux";
 import {useEditProfileInfoMutation} from "../../../redux/profile/profileQueryApi";
+import { useAppSelector } from "../../../hook";
+import { IProfileInfo } from "../../../redux/profile/profileQueryApiTypes";
+import { FC } from "react";
 
-export const EditProfileInfoForm = ({profileInfo, setEditMode}) => {
+type EditProfileInfoFormProps = {
+    profileInfo: IProfileInfo
+    setEditMode: (value: boolean) => void
+}
 
-    const dispatch = useDispatch()
-    const myId = useSelector(state => state.authMe.authMeData.id)
+export const EditProfileInfoForm: FC<EditProfileInfoFormProps> = ({profileInfo, setEditMode}) => {
+
+    const myId = useAppSelector(state => state.authMe.authMeData.id)
 
     const [editProfileInfoMutation] = useEditProfileInfoMutation()
 
@@ -24,15 +29,18 @@ export const EditProfileInfoForm = ({profileInfo, setEditMode}) => {
                 fullName: Yup.string()
                     .required(""),
             })}
-            onSubmit={async (values, actions) => {
-                // const responseData = await dispatch(editProfileInfo(values, myId))
-                const responseData = await editProfileInfoMutation(values, myId)
-                if (responseData.data.resultCode === 0) {
+            onSubmit={(values, actions) => {
+                editProfileInfoMutation(values).unwrap()
+                .then((payload) => {
                     setEditMode(false)
-                }
-                else {
-                    actions.setStatus(responseData.data.messages[0])
-                }
+                    if (payload.resultCode === 0) {
+                        setEditMode(false)
+                    }
+                    else {
+                        actions.setStatus(payload.messages[0])
+                    }
+                })
+                .catch((error) => console.log(error))
                 actions.setSubmitting(false);
             }}
         >

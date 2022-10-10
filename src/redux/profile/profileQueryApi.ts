@@ -1,15 +1,15 @@
 import instanceApi from "../instanceQueryApi";
-import {IPosts, IProfileInfo} from "./profileQueryApiTypes";
+import {IEditProfileInfo, IPosts, IProfileInfo, IResponse} from "./profileQueryApiTypes";
 
 let postLength: number;
 
 export const profileQueryApi = instanceApi.injectEndpoints({
     endpoints: (build) => ({
-        getProfileInfo: build.query<IProfileInfo, number>({
+        getProfileInfo: build.query<IProfileInfo, string>({
             query: (userId) => `/profile/${userId}`,
             providesTags: ['ProfileInfo']
         }),
-        editProfileInfo: build.mutation<void, IProfileInfo>({
+        editProfileInfo: build.mutation<IResponse, IEditProfileInfo>({
             query: (body) => ({
                 url: 'profile',
                 method: 'PUT',
@@ -17,7 +17,7 @@ export const profileQueryApi = instanceApi.injectEndpoints({
             }),
             invalidatesTags: ['ProfileInfo']
         }),
-        getStatus: build.query<string, number>({
+        getStatus: build.query<string, string>({
             query: (userId) => `/profile/status/${userId}`,
             providesTags: ['Status'],
         }),
@@ -29,9 +29,8 @@ export const profileQueryApi = instanceApi.injectEndpoints({
             }),
             invalidatesTags: ['Status']
         }),
-        savePhoto: build.mutation<void, any>({
+        savePhoto: build.mutation<void, File>({
             query: (photoFile) => {
-                console.log(photoFile)
                 let formData = new FormData()
                 formData.append("image", photoFile)
                 return {

@@ -1,13 +1,13 @@
 {
   "posts": [
     {
-      "text": "post 1",
+      "text": "1",
       "like": 0,
       "dislike": 0,
       "id": 1
     },
     {
-      "text": "hi",
+      "text": "post",
       "like": 0,
       "dislike": 0,
       "id": 2
