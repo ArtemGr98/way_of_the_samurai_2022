@@ -25,7 +25,7 @@ const Posts = () => {
                 <PostsTitle>
                     Posts
                 </PostsTitle>
-                {postData.map( data => <Post key={data.id} text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
+                {postData && postData.map( data => <Post key={data.id} text={data.text} like={data.like} dislike={data.dislike} id={data.id} /> )}
             </div>
         </div>}
     </>

@@ -40,7 +40,7 @@ export const EditProfileInfoForm: FC<EditProfileInfoFormProps> = ({profileInfo, 
                         actions.setStatus(payload.messages[0])
                     }
                 })
-                .catch((error) => console.log(error))
+                .catch((error: Error) => console.log('onSubmit Error', error))
                 actions.setSubmitting(false);
             }}
         >

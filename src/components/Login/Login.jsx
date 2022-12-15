@@ -27,7 +27,7 @@ const Login = () => {
                     .required("Required"),
             })}
             onSubmit={async (values, actions) => {
-                const resulCode = await dispatch(authLogin(values, actions.setStatus))
+                const resulCode = await dispatch(authLogin({loginData :values, setStatus: actions.setStatus}))
                 actions.setSubmitting(false)
                 resulCode === 0 && actions.resetForm({})
             }}>

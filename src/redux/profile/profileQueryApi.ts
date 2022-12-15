@@ -57,7 +57,7 @@ export const profileQueryApi = instanceApi.injectEndpoints({
 
         }),
         addPost: build.mutation<IPosts, string>({
-            query: (newPostText,) => {
+            query: (newPostText) => {
                 const post = {
                     text: newPostText,
                     like: 0,
